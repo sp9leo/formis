@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include kalkulator *.css
+recursive-include kalkulator *.csv
+recursive-include kalkulator *.html
+recursive-include kalkulator *.ico
+recursive-include kalkulator *.js
+recursive-include kalkulator *.json
+recursive-include kalkulator *.md
+recursive-include kalkulator *.png
+recursive-include kalkulator *.py
+recursive-include kalkulator *.svg
+recursive-include kalkulator *.txt
+recursive-exclude kalkulator *.pyc
