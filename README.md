@@ -1,6 +1,6 @@
-## Kalkulator
+## Formis
 
-kalkulator cene
+formis
 
 #### License
 
