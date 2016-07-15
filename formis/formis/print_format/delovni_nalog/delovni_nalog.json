@@ -1,0 +1,18 @@
+{
+ "creation": "2016-01-12 12:05:52.769571", 
+ "custom_format": 0, 
+ "disabled": 0, 
+ "doc_type": "Delovni nalog", 
+ "docstatus": 0, 
+ "doctype": "Print Format", 
+ "font": "Verdana", 
+ "format_data": "[{\"fieldname\": \"print_heading_template\", \"fieldtype\": \"HTML\", \"options\": \"    <blockquote style=\\\"margin: 0 0 0 40px; border: none; padding: 0px;\\\"><blockquote style=\\\"margin: 0 0 0 40px; border: none; padding: 0px;\\\"><blockquote style=\\\"margin: 0 0 0 40px; border: none; padding: 0px;\\\"><blockquote style=\\\"margin: 0 0 0 40px; border: none; padding: 0px;\\\"><blockquote style=\\\"margin: 0 0 0 40px; border: none; padding: 0px;\\\"><blockquote style=\\\"margin: 0 0 0 40px; border: none; padding: 0px;\\\"><blockquote style=\\\"margin: 0 0 0 40px; border: none; padding: 0px;\\\"><blockquote style=\\\"margin: 0 0 0 40px; border: none; padding: 0px;\\\"><blockquote style=\\\"margin: 0 0 0 40px; border: none; padding: 0px;\\\"><blockquote style=\\\"margin: 0 0 0 40px; border: none; padding: 0px;\\\"><blockquote style=\\\"margin: 0 0 0 40px; border: none; padding: 0px;\\\"><h1 style=\\\"text-align: center;\\\">{{doc.name}}</h1></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote>    \"}, {\"fieldtype\": \"Section Break\"}, {\"fieldtype\": \"Column Break\"}, {\"print_hide\": 0, \"fieldname\": \"stranka\"}, {\"print_hide\": 0, \"fieldname\": \"ponudba\"}, {\"print_hide\": 0, \"fieldname\": \"bom\"}, {\"fieldtype\": \"Column Break\"}, {\"print_hide\": 0, \"fieldname\": \"datum\"}, {\"print_hide\": 0, \"fieldname\": \"izdelati_do\"}, {\"print_hide\": 0, \"fieldname\": \"workflow_state\"}, {\"fieldtype\": \"Section Break\"}, {\"fieldtype\": \"Column Break\"}, {\"print_hide\": 0, \"fieldname\": \"_custom_html\", \"fieldtype\": \"HTML\", \"options\": \"<hr>\"}, {\"fieldtype\": \"Section Break\"}, {\"fieldtype\": \"Column Break\"}, {\"print_hide\": 0, \"fieldname\": \"kosov\"}, {\"print_hide\": 0, \"fieldname\": \"izdelek\"}, {\"fieldtype\": \"Column Break\"}, {\"print_hide\": 0, \"fieldname\": \"opis\"}, {\"fieldtype\": \"Section Break\"}, {\"fieldtype\": \"Column Break\"}, {\"print_hide\": 0, \"fieldname\": \"datoteka\"}, {\"fieldtype\": \"Column Break\"}, {\"fieldtype\": \"Section Break\"}, {\"fieldtype\": \"Column Break\"}, {\"print_hide\": 0, \"fieldname\": \"_custom_html\", \"fieldtype\": \"HTML\", \"options\": \"<hr>\"}, {\"fieldtype\": \"Section Break\"}, {\"fieldtype\": \"Column Break\"}, {\"visible_columns\": [{\"print_hide\": 0, \"fieldname\": \"nacin\", \"print_width\": \"\"}, {\"print_hide\": 0, \"fieldname\": \"hitrost\", \"print_width\": \"\"}, {\"print_hide\": 0, \"fieldname\": \"min_power\", \"print_width\": \"\"}, {\"print_hide\": 0, \"fieldname\": \"max_power\", \"print_width\": \"\"}], \"print_hide\": 0, \"fieldname\": \"parametri\"}, {\"fieldtype\": \"Section Break\"}, {\"fieldtype\": \"Column Break\"}, {\"print_hide\": 0, \"fieldname\": \"_custom_html\", \"fieldtype\": \"HTML\", \"options\": \"<hr>\"}, {\"fieldtype\": \"Section Break\"}, {\"fieldtype\": \"Column Break\"}, {\"print_hide\": 0, \"fieldname\": \"creation\"}, {\"print_hide\": 0, \"fieldname\": \"modified\"}]", 
+ "idx": 0, 
+ "modified": "2016-06-27 13:31:14.618776", 
+ "modified_by": "Administrator", 
+ "name": "Delovni nalog", 
+ "owner": "info@formis.si", 
+ "print_format_builder": 1, 
+ "print_format_type": "Server", 
+ "standard": "Yes"
+}
