@@ -34,5 +34,14 @@
   "name": "Kalkulator-Client", 
   "script": "frappe.ui.form.on(\"Kalkulator\", \"len\", function(frm) {\ncur_frm.set_value(\"area\", (frm.doc.len* frm.doc.wid));\n });\n \n frappe.ui.form.on(\"Kalkulator\", \"wid\", function(frm) {\n cur_frm.set_value(\"area\", (frm.doc.len* frm.doc.wid))       \n });\n \n //izracunaj povrsino//\n frappe.ui.form.on(\"Kalkulator\", \"area\", function(frm) {\n cur_frm.set_value(\"mm2\", (frm.doc.area*100));\n cur_frm.set_value(\"m2\", (frm.doc.area/10000));\n if (frm.doc.area > 25) {cur_frm.set_value(\"areaovermin\", (frm.doc.area-25))}else {frm.set_value(\"areaovermin\",00)}\n     \n });\n \n //izracunaj znesek glede na povrsino//\n frappe.ui.form.on(\"Kalkulator\", \"refresh\", function(frm) {\n var d= (frm.doc.variable_price*frm.doc.areaovermin);\nif (frm.doc.area <= 25 && frm.doc.qty == 1){ frm.set_value(\"value\", frm.doc.current_price); } \n else {frm.set_value(\"value\",d+frm.doc.current_price);}\ncur_frm.set_value(\"valueovermin\",d);\n });\n \n //izracunaj ceno glede na kolicino//\n frappe.ui.form.on(\"Kalkulator\", \"qty\", function(frm) {\n var qty= frm.doc.qty;   \n if (qty>1 && qty<= 10) {frm.set_value(\"current_price\",frm.doc.p1);}\n else if (qty>10 && qty<=25) {frm.set_value(\"current_price\",frm.doc.p2);}\n else if (qty>25 && qty<=50) {frm.set_value(\"current_price\",frm.doc.p3);}\n else if (qty>50 && qty<=99) {frm.set_value(\"current_price\",frm.doc.p4);}\n else if (qty>99) {msgprint(\"cena po dogovoru\");}\n else {frm.set_value(\"current_price\",frm.doc.fixed_price);}\n frm.set_value(\"total_value\",frm.doc.value*frm.doc.qty);\nfrm.refresh();\n });\n\nfrappe.ui.form.on(\"Kalkulator\", \"refresh\", function(frm) {\n  frm.set_value(\"total_value\",frm.doc.value*frm.doc.qty);\n });\n \n frappe.ui.form.on(\"Kalkulator\", \"refresh\", function(frm) {\n    frm.add_custom_button(__(\"Do Something\"), function() {\n      //msgprint(\"hello\");\nfrm.refresh();\n });\n\t});", 
   "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "Izdelki Formis", 
+  "modified": "2016-08-16 18:09:20.356552", 
+  "name": "Izdelki Formis-Client", 
+  "script": "cur_frm.add_fetch(\"bom\", \"total_cost\", \"strosek\");\ncur_frm.add_fetch(\"bom\", \"raw_material_cost\", \"strosek_materiala\");\ncur_frm.add_fetch(\"bom\", \"operating_cost\", \"strosek_izdelave\");\ncur_frm.add_fetch(\"bom\", \"rm_cost_as_per\", \"rm_cost_as_per\");\ncur_frm.add_fetch(\"bom\", \"buying_price_list\", \"buying_price_list\");\n", 
+  "script_type": "Client"
  }
 ]
