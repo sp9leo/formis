@@ -2,10 +2,37 @@
  {
   "docstatus": 0, 
   "doctype": "Custom Script", 
+  "dt": "Sales Order", 
+  "modified": "2016-08-01 15:47:11.873706", 
+  "name": "Sales Order-Client", 
+  "script": "frappe.ui.form.on('Sales Order', 'onload', function(frm){\n if (frm.doc.__islocal) { frm.set_value(\"delivery_date\", frappe.datetime.add_days(frappe.datetime.nowdate(), 7));}\n});\nfrappe.ui.form.on('Sales Order', 'onload', function(frm){\n   if (frm.doc.__islocal) { frm.set_value(\"veljavnost\", frappe.datetime.add_days(frappe.datetime.nowdate(), 5));}\n});", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "Sales Invoice", 
+  "modified": "2016-08-01 15:48:07.271173", 
+  "name": "Sales Invoice-Client", 
+  "script": "cur_frm.cscript.custom_validate = function(doc) {\n    if (doc.naming_series == \"DEL1-MB-.###\")  {\n        msgprint(\"Na\u010din pla\u010dila je bil spremenjen v GOTOVINA!\");\ncur_frm.set_value(\"mode_of_payment\",\"Gotovina\");\n        validated = true;\n    }\n};\n", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "Delivery Note", 
+  "modified": "2016-08-01 15:53:56.779794", 
+  "name": "Delivery Note-Client", 
+  "script": "cur_frm.cscript.custom_refresh = function(doc) {\n    // use the __islocal value of doc, to check if the doc is saved or not\n    cur_frm.set_df_property(\"potrdilo\", \"read_only\", doc.status==\"Closed\");\n}", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
   "dt": "Kalkulator", 
-  "modified": "2016-07-17 13:26:09.094819", 
+  "modified": "2016-08-16 13:26:34.601183", 
   "name": "Kalkulator-Client", 
-  "script": "frappe.ui.form.on(\"Kalkulator\", \"len\", function(frm) {\n       cur_frm.set_value(\"area\", (frm.doc.len* frm.doc.wid));\n       });\nfrappe.ui.form.on(\"Kalkulator\", \"wid\", function(frm) {\n       cur_frm.set_value(\"area\", (frm.doc.len* frm.doc.wid))\n       });\n\n//izra\u010dunaj povr\u0161ino//\nfrappe.ui.form.on(\"Kalkulator\", \"area\", function(frm) {\ncur_frm.set_value(\"mm2\", (frm.doc.area* 100));\ncur_frm.set_value(\"m2\", (frm.doc.area/ 100));\nif (frm.doc.area > 25) {cur_frm.set_value(\"areaovermin\", (frm.doc.area-25))}\nelse {frm.set_value(\"areaovermin\",00)}\n\n       });\n\n//izra\u010dunaj znesek glede na povr\u0161ino//\nfrappe.ui.form.on(\"Kalkulator\", \"qty\", function(frm) {\n\nvar d= (frm.doc.variable_price*frm.doc.areaovermin);\nvar q= (frm.doc.value);\nif (frm.doc.area <= 25 && frm.doc.qty == 1){ frm.set_value(\"value\", frm.doc.fixed_price);\n} else if (frm.doc.area > 25 && frm.doc.qty > 1){frm.set_value(\"value\",d+frm.doc.reduced_price);\n}\ncur_frm.set_value(\"valueovermin\", d);\n\n});\n\n//izra\u010dunaj ceno glede na koli\u010dino//\nfrappe.ui.form.on(\"Kalkulator\", \"qty\", function(frm) {\nvar qty= frm.doc.qty;\n    if (qty < 2) {\n        frm.set_value(\"reduced_price\",frm.doc.fixed_price);\n    } else if (qty <= 10) {\n\tfrm.set_value(\"reduced_price\",frm.doc.fixed_price*0.75);    \n\t} else if (qty <= 20) {\n        frm.set_value(\"reduced_price\",frm.doc.fixed_price*0.375);\n    }else if (qty <= 50) {\n       frm.set_value(\"reduced_price\",frm.doc.fixed_price*0.325);\n    }\nelse if (qty <= 100) {\n        frm.set_value(\"reduced_price\",frm.doc.fixed_price*0.275);\n    }\nelse {\n        msgprint(\"cena po dogovoru\");\n    }\nfrm.set_value(\"total_value\",frm.doc.value*frm.doc.qty);\n});\n", 
+  "script": "frappe.ui.form.on(\"Kalkulator\", \"len\", function(frm) {\ncur_frm.set_value(\"area\", (frm.doc.len* frm.doc.wid));\n });\n \n frappe.ui.form.on(\"Kalkulator\", \"wid\", function(frm) {\n cur_frm.set_value(\"area\", (frm.doc.len* frm.doc.wid))       \n });\n \n //izracunaj povrsino//\n frappe.ui.form.on(\"Kalkulator\", \"area\", function(frm) {\n cur_frm.set_value(\"mm2\", (frm.doc.area*100));\n cur_frm.set_value(\"m2\", (frm.doc.area/10000));\n if (frm.doc.area > 25) {cur_frm.set_value(\"areaovermin\", (frm.doc.area-25))}else {frm.set_value(\"areaovermin\",00)}\n     \n });\n \n //izracunaj znesek glede na povrsino//\n frappe.ui.form.on(\"Kalkulator\", \"refresh\", function(frm) {\n var d= (frm.doc.variable_price*frm.doc.areaovermin);\nif (frm.doc.area <= 25 && frm.doc.qty == 1){ frm.set_value(\"value\", frm.doc.current_price); } \n else {frm.set_value(\"value\",d+frm.doc.current_price);}\ncur_frm.set_value(\"valueovermin\",d);\n });\n \n //izracunaj ceno glede na kolicino//\n frappe.ui.form.on(\"Kalkulator\", \"qty\", function(frm) {\n var qty= frm.doc.qty;   \n if (qty>1 && qty<= 10) {frm.set_value(\"current_price\",frm.doc.p1);}\n else if (qty>10 && qty<=25) {frm.set_value(\"current_price\",frm.doc.p2);}\n else if (qty>25 && qty<=50) {frm.set_value(\"current_price\",frm.doc.p3);}\n else if (qty>50 && qty<=99) {frm.set_value(\"current_price\",frm.doc.p4);}\n else if (qty>99) {msgprint(\"cena po dogovoru\");}\n else {frm.set_value(\"current_price\",frm.doc.fixed_price);}\n frm.set_value(\"total_value\",frm.doc.value*frm.doc.qty);\nfrm.refresh();\n });\n\nfrappe.ui.form.on(\"Kalkulator\", \"refresh\", function(frm) {\n  frm.set_value(\"total_value\",frm.doc.value*frm.doc.qty);\n });\n \n frappe.ui.form.on(\"Kalkulator\", \"refresh\", function(frm) {\n    frm.add_custom_button(__(\"Do Something\"), function() {\n      //msgprint(\"hello\");\nfrm.refresh();\n });\n\t});", 
   "script_type": "Client"
  }
 ]
