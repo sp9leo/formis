@@ -8,7 +8,7 @@ app_description = "formis"
 app_icon = "octicon octicon-file-directory"
 app_color = "grey"
 app_email = "formis"
-app_version = "0.0.1"
+app_version = "0.0.2"
 app_license = "MIT"
 fixtures = ["Custom Field", "Property Setter","Custom Script", "Print Format", "Workflow"]
 
