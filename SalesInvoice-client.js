@@ -1,10 +1,11 @@
 cur_frm.cscript.custom_validate = function(doc) {
     if (doc.naming_series == "DEL1-MB-.###")  {
-        msgprint("Naï¿½in plaï¿½ila je bil spremenjen v GOTOVINA!");
+        msgprint("Naèin plaèila je bil spremenjen v GOTOVINA!");
 cur_frm.set_value("mode_of_payment","Gotovina");
         validated = true;
     }
 };
+//izpisi sales_order in jih grupiraj, da se ne ponavljajo
 frappe.ui.form.on("Sales Invoice", "onload", function(frm) {
 sales_orders = []
 $.each(frm.doc.items, function(idx, row) {
