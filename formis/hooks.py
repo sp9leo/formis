@@ -36,6 +36,10 @@ fixtures = ["Custom Field", "Property Setter","Custom Script", "Print Format", "
 
 # Generators
 # ----------
+website_context = {
+	"favicon": 	"/formis/public/favicon.png",
+	"splash_image": "/formis/public/formis_logo.png"
+}
 
 # automatically create page for each record of this doctype
 # website_generators = ["Web Page"]
@@ -108,4 +112,3 @@ notification_config = "formis.notifications.get_notification_config"
 # override_whitelisted_methods = {
 # 	"frappe.desk.doctype.event.event.get_events": "formis.event.get_events"
 # }
-

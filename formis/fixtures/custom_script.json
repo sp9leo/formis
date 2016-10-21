@@ -2,28 +2,55 @@
  {
   "docstatus": 0, 
   "doctype": "Custom Script", 
+  "dt": "PriceCalc", 
+  "modified": "2016-09-14 18:50:32.999921", 
+  "name": "PriceCalc-Client", 
+  "script": "//filtriraj cenik glede na izbran item\nfrappe.ui.form.on(\"PriceCalc\", \"refresh\", function(frm) {\n    cur_frm.set_query(\"cenik\", function() {\n        return {\n            \"filters\": {\n                \"item_name\": frm.doc.item,                \n            }\n        };\n    });\n});\n\n//pridobi podatke preko linka\ncur_frm.add_fetch(\"doc_1\", \"last_purchase_rate\", \"last_purchase_rate\");\ncur_frm.add_fetch(\"doc_1\", \"valuation_rate\", \"valuation_rate\");\ncur_frm.add_fetch(\"cenik\", \"price_list\", \"pricelist\");\n\n//izpisi ceno skupaj z enotami\nfrappe.ui.form.on(\"PriceCalc\", \"doc_1\", function(frm) {\n cur_frm.set_value(\"price1\", (frm.doc.price)+\" za \"+(frm.doc.item_uom));\n });\n\n //izracunaj povrsino//\n frappe.ui.form.on(\"PriceCalc\", \"x\", function(frm) {\n cur_frm.set_value(\"area\", (frm.doc.x*frm.doc.y)/10000);\n    \n });\nfrappe.ui.form.on(\"PriceCalc\", \"y\", function(frm) {\n cur_frm.set_value(\"area\", (frm.doc.x*frm.doc.y)/10000);\n \n });\nfrappe.ui.form.on(\"PriceCalc\", \"refresh\", function(frm) {\n cur_frm.set_value(\"area\", (frm.doc.x*frm.doc.y)/10000);\n  });\n//izracunaj ceno materiala\nfrappe.ui.form.on(\"PriceCalc\", \"refresh\", function(frm) {\n cur_frm.set_value(\"material_total\", (frm.doc.area*frm.doc.price));\n\n});\nfrappe.ui.form.on(\"PriceCalc\", \"man_price\", function(frm) {\n cur_frm.set_value(\"material_total1\", (frm.doc.area*frm.doc.man_price));\n\n});\nfrappe.ui.form.on(\"PriceCalc\", \"refresh\", function(frm) {\n cur_frm.set_value(\"material_total1\", (frm.doc.area*frm.doc.man_price));\n\n});\n//izracunaj ceno dela\nfrappe.ui.form.on(\"PriceCalc\", \"refresh\", function(frm) {\n cur_frm.set_value(\"work_total\", (frm.doc.work_price*frm.doc.razrez));\n\n });\nfrappe.ui.form.on(\"PriceCalc\", \"refresh\", function(frm) {\n cur_frm.set_value(\"total\", (frm.doc.work_total+frm.doc.material_total));\n\n });\nfrappe.ui.form.on(\"PriceCalc\", \"man_price\", function(frm) {\n cur_frm.set_value(\"total1\", (frm.doc.work_total+frm.doc.material_total1));\n\n });\nfrappe.ui.form.on(\"PriceCalc\", \"refresh\", function(frm) {\n cur_frm.set_value(\"total1\", (frm.doc.work_total+frm.doc.material_total1));\n\n });\nfrappe.ui.form.on(\"PriceCalc\", \"qty\", function(frm) {\n cur_frm.set_value(\"kos\", (frm.doc.total*frm.doc.qty));\n\n });\nfrappe.ui.form.on(\"PriceCalc\", \"refresh\", function(frm) {\n cur_frm.set_value(\"kos\", (frm.doc.total*frm.doc.qty));\n\n });\n\n//gumb za osvezitev kalkulacije\nfrappe.ui.form.on(\"PriceCalc\", \"button\", function(frm) {\nfrm.refresh();\n});\n\nfrappe.ui.form.on(\"PriceCalc\", \"validate\", function(frm) {\n    if (frm.doc.work_total < 4) {\n        msgprint(\"Vrednost naro\u010dila je manj\u0161a od 4\u20ac\");\n        validated = true;\n    }\n});\n", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "Item", 
+  "modified": "2016-09-16 22:20:18.955595", 
+  "name": "Item-Client", 
+  "script": "{\n\ncur_frm.cscript.custom_item_group = compute;\nfunction compute(doc, cdt, cdn)\n{\n//if(doc.item_group==\"Raw Material\")\n{\n//Find out the first two digits of the code\ntemp_code = \"\";\nswitch(doc.item_group) \n{\ndefault:\ntemp_code = temp_code;\n}\n//Get a list of all the exisiting codes with the same first two digits\nfrappe.call({ method:\"frappe.client.get_list\",\nargs:{\ndoctype: \"Item\",\nfilters: {\"item_group\": [\"like\", temp_code+\"Izdelava po naro\u010dilu\"]},\nfields: [\"name\"],\nlimit_page_length: 500\n},\ncallback: function(r) {\n//Count the number of elements in the list (which will decide what customer code to try)\nif (r.message) {\ntemp_code += zeroPad(r.message.length, 3);\nconsole.log(temp_code );\n\n}\nelse{\ntemp_code += \"00\";\nconsole.log(temp_code );\n}\nwindow.alert(temp_code);\n// You probably want to add a section of code here that checks to see if the new code is an element of the list, \n// and increment the code if that customer code already exists (this only comes up if a customer is deleted)\n// Otherwise, you could create multiple customers with the same code.\n//Submit the customer code and refresh the field\nif (doc.item_group==\"Izdelava po naro\u010dilu\"){\ndoc.item_code=\"IPN\"+temp_code+\"_\"+doc.stranka;}\nelse{doc.item_code=doc.item_name;\n}\nrefresh_field(\"item_code\");\n}\n});\n}\t\nfunction zeroPad(num, places) {\nvar zero = places - num.toString().length + 1;\nreturn Array(+(zero > 0 && zero)).join(\"0\") + num;\n}window.alert(zero);\n}\n}", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "Quotation", 
+  "modified": "2016-10-20 20:09:41.864658", 
+  "name": "Quotation-Client", 
+  "script": "frappe.ui.form.on('Quotation', 'onload', function(frm){\n   if (frm.doc.__islocal) { frm.set_value(\"veljavnost\", frappe.datetime.add_days(frappe.datetime.nowdate(), 7));}\n});\n\nfrappe.ui.form.on(\"Quotation\", \"stock\", function(frm) {\nfrappe.model.with_doc(\"calc\", frm.doc.stock, function() { \nvar stock_doc = frappe.model.get_doc(\"calc\", frm.doc.stock);\nfrm.set_value(\"customer\", stock_doc.customer);\n\nfrappe.model.with_doc(\"calc\", frm.doc.stock, function(index,row) {\nd = frm.add_child(\"items\");\nv = frm.add_child(\"items\");\n\n//levi stolpec v obstoje\u010dem dokumentu desni iz dokumenta odkjer isces podatke\nd.item_name = stock_doc.izdelek;\nd.description = stock_doc.opis;\nd.rate=stock_doc.total;\nd.item_code = \"IPN\";\nv.item_code = stock_doc.item;\nv.qty = stock_doc.area_total;\n\n//cur_frm.refresh_field(\"items\");\n//msgprint(\"items\");\n\nfrm.refresh_field(\"items\");\n}) \n})\n})\n\n", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
   "dt": "Sales Order", 
-  "modified": "2016-08-01 15:47:11.873706", 
+  "modified": "2016-10-20 19:57:35.454197", 
   "name": "Sales Order-Client", 
-  "script": "frappe.ui.form.on('Sales Order', 'onload', function(frm){\n if (frm.doc.__islocal) { frm.set_value(\"delivery_date\", frappe.datetime.add_days(frappe.datetime.nowdate(), 7));}\n});\nfrappe.ui.form.on('Sales Order', 'onload', function(frm){\n   if (frm.doc.__islocal) { frm.set_value(\"veljavnost\", frappe.datetime.add_days(frappe.datetime.nowdate(), 5));}\n});", 
+  "script": "frappe.ui.form.on(\"Sales Order\", \"validate\", function(frm) {\nsales_orders = []\n$.each(frm.doc.items, function(idx, row) {\ninList(sales_orders, row.prevdoc_docname) ? \"\": sales_orders.push(row.prevdoc_docname)\n});\nfrm.set_value(\"ponudba\", sales_orders.join(\",\"))\n});\n\nfrappe.ui.form.on('Sales Order', 'onload', function(frm){\n if (frm.doc.__islocal) { frm.set_value(\"delivery_date\", frappe.datetime.add_days(frappe.datetime.nowdate(), 7));}\n});\nfrappe.ui.form.on('Sales Order', 'onload', function(frm){\n   if (frm.doc.__islocal) { frm.set_value(\"veljavnost\", frappe.datetime.add_days(frappe.datetime.nowdate(), 7));}\n});\n\n", 
   "script_type": "Client"
  }, 
  {
   "docstatus": 0, 
   "doctype": "Custom Script", 
   "dt": "Sales Invoice", 
-  "modified": "2016-08-01 15:48:07.271173", 
+  "modified": "2016-10-09 04:41:08.268952", 
   "name": "Sales Invoice-Client", 
-  "script": "cur_frm.cscript.custom_validate = function(doc) {\n    if (doc.naming_series == \"DEL1-MB-.###\")  {\n        msgprint(\"Na\u010din pla\u010dila je bil spremenjen v GOTOVINA!\");\ncur_frm.set_value(\"mode_of_payment\",\"Gotovina\");\n        validated = true;\n    }\n};\n", 
+  "script": "cur_frm.cscript.custom_validate = function(doc) {\n    if (doc.naming_series == \"DEL1-MB-.###\")  {\n        msgprint(\"Na\u010din pla\u010dila je bil spremenjen v GOTOVINA!\");\ncur_frm.set_value(\"mode_of_payment\",\"Gotovina\");\n        validated = true;\n    }\n};\n\nfrappe.ui.form.on(\"Sales Invoice\", \"onload\", function(frm) {\nsales_orders = []\n$.each(frm.doc.items, function(idx, row) {\ninList(sales_orders, row.sales_order) ? \"\": sales_orders.push(row.sales_order)\n});\nfrm.set_value(\"sales_order\", sales_orders.join(\",\"))\n});\n\nfrappe.ui.form.on(\"Sales Invoice\", \"onload\", function(frm) {\ndelivery_notes = []\n$.each(frm.doc.items, function(idx, row) {\ninList(delivery_notes, row.delivery_note) ? \"\": delivery_notes.push(row.delivery_note)\n});\nfrm.set_value(\"delivery_note\", delivery_notes.join(\",\"))\n});\n", 
   "script_type": "Client"
  }, 
  {
   "docstatus": 0, 
   "doctype": "Custom Script", 
   "dt": "Delivery Note", 
-  "modified": "2016-08-01 15:53:56.779794", 
+  "modified": "2016-10-09 03:33:39.486487", 
   "name": "Delivery Note-Client", 
-  "script": "cur_frm.cscript.custom_refresh = function(doc) {\n    // use the __islocal value of doc, to check if the doc is saved or not\n    cur_frm.set_df_property(\"potrdilo\", \"read_only\", doc.status==\"Closed\");\n}", 
+  "script": "cur_frm.cscript.custom_refresh = function(doc) {\n    // use the __islocal value of doc, to check if the doc is saved or not\n    cur_frm.set_df_property(\"potrdilo\", \"read_only\", doc.status==\"Closed\");\n}\n\nfrappe.ui.form.on(\"Delivery Note\", \"validate\", function(frm) {\nsales_orders = []\n$.each(frm.doc.items, function(idx, row) {\ninList(sales_orders, row.against_sales_order) ? \"\": sales_orders.push(row.against_sales_order)\n});\nfrm.set_value(\"so_no\", sales_orders.join(\",\"))\n});", 
   "script_type": "Client"
  }, 
  {
