@@ -4,9 +4,9 @@
     <div class="col-xs-6"> </div>
     <div class="col-xs-6">
         <div class="col-xs-5 text-right">
-            <h3><b>{{doc.select_print_heading or "Dobavnica"}}</b></h3></div>
+            <h4><b>{{doc.select_print_heading or "Dobavnica"}}</b></h4></div>
         <div class="col-xs-7">
-            <h3><b>{{doc.name}}</b></h3> </div>
+            <h4><b>{{doc.name}}</b></h4> </div>
     </div>
 </div>
 <!--kupec in naslov kupca-->
@@ -19,7 +19,7 @@
             </div>
             <!--ddv in narocilo kupca-->{%if frappe.db.get_value("Customer",doc.customer,"tax_id")is defined-%}
             <div class="row" data-fieldname="tax_id" data-fieldtype="Data">
-                <div class="col-xs-8 text-left">Davčna št.: {{ frappe.db.get_value("Customer",doc.customer,"tax_id")or "/"}} </div>
+                <div id="taxid" class="col-xs-8 text-left">Davčna št.: {{ frappe.db.get_value("Customer",doc.customer,"tax_id")or "/"}} </div>
             </div>{%endif%} {%if doc.po_no is not none-%}
             <div class="row" data-fieldname="po_no" data-fieldtype="Data">
                 <div class="col-xs-12 text-left">št. naročila kupca: <b>{{doc.po_no}}</b> </div>
@@ -47,14 +47,13 @@
                 <label>Način dostave</label>
             </div>
             <div class="col-xs-7  value">{{doc.nacin_dostave}}</div>
-        </div>{%if doc.so_no|length<12%}
+        </div>{%if doc.so_no|length!=11%}
         <div class="row" data-fieldname="so_no" data-fieldtype="Data">
             <div class="col-xs-5 text-right">
                 <label>Naročilo</label>
             </div>
             <div class="col-xs-7  value">{{doc.so_no or ""}}</div>
-        </div>{%endif%}
-    </div>
+        </div>{%endif%} </div>
 </div>
 <!--tabela items-->
 <div class="row section-break">
@@ -101,15 +100,24 @@
     <div class="col-xs-4">
         <div class="col-xs-5"><small><b>Naslov za dostavo:</b></small></div>
         <div class="col-xs-7">{{doc.shipping_address or ""}}</div>
-    </div>{%endif-%} </div>
-{%if doc.so_no|length>11%}
+    </div>{%endif-%} </div> {%if doc.so_no|length>11%}
 <div class="row section-break">
-<div class="col-xs-6" id="reference"><b>Referenčni dokumenti:</b>
-    <br>{{doc.so_no}}
-    </div>{%endif%}</div>
-<!--total-->
+    <div class="col-xs-6" id="reference"><b>Referenčni dokumenti:</b>
+        <br>{{doc.so_no}} </div>
+</div>{%endif%}
+<div class="row section-break">
+
+    <div class="col-xs-5"><b>Izdal:</b>
+        <br>Sandi Bobek
+        <br>{{doc.get_formatted("datum_dostave")}}</div>
+    <div class="col-xs-5"><b>Prevzel:</b>
+        <br>Ime in priimek:
+        <br><br>Datum:<br><br>Podpis:</div>
+    
+</div>
+<!--noga-->
 <div class="footer navbar-fixed-bottom">
-    <div class="col-xs-2"></div>
-    <div class="col-xs-8" style="border-top:1px solid lightgray;"> <small>{{footer}}</small> </div>
-    <div class="col-xs-2"></div>
+    <div class="col-xs-1"></div>
+    <div class="col-xs-10" id="footer" style="border-top:1px solid lightgray;"> <small>{{footer}}</small> </div>
+    <div class="col-xs-1"></div>
 </div>
