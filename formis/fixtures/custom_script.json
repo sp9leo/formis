@@ -70,5 +70,14 @@
   "name": "Izdelki Formis-Client", 
   "script": "cur_frm.add_fetch(\"bom\", \"total_cost\", \"strosek\");\ncur_frm.add_fetch(\"bom\", \"raw_material_cost\", \"strosek_materiala\");\ncur_frm.add_fetch(\"bom\", \"operating_cost\", \"strosek_izdelave\");\ncur_frm.add_fetch(\"bom\", \"rm_cost_as_per\", \"rm_cost_as_per\");\ncur_frm.add_fetch(\"bom\", \"buying_price_list\", \"buying_price_list\");\n", 
   "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "Address", 
+  "modified": "2016-11-03 23:14:34.032335", 
+  "name": "Address-Client", 
+  "script": "cur_frm.add_fetch(\"posta\", \"post_number\", \"pincode\");\ncur_frm.add_fetch(\"posta\", \"kraj\", \"city\");", 
+  "script_type": "Client"
  }
 ]
