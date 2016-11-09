@@ -11,15 +11,6 @@
  {
   "docstatus": 0, 
   "doctype": "Custom Script", 
-  "dt": "Item", 
-  "modified": "2016-09-16 22:20:18.955595", 
-  "name": "Item-Client", 
-  "script": "{\n\ncur_frm.cscript.custom_item_group = compute;\nfunction compute(doc, cdt, cdn)\n{\n//if(doc.item_group==\"Raw Material\")\n{\n//Find out the first two digits of the code\ntemp_code = \"\";\nswitch(doc.item_group) \n{\ndefault:\ntemp_code = temp_code;\n}\n//Get a list of all the exisiting codes with the same first two digits\nfrappe.call({ method:\"frappe.client.get_list\",\nargs:{\ndoctype: \"Item\",\nfilters: {\"item_group\": [\"like\", temp_code+\"Izdelava po naro\u010dilu\"]},\nfields: [\"name\"],\nlimit_page_length: 500\n},\ncallback: function(r) {\n//Count the number of elements in the list (which will decide what customer code to try)\nif (r.message) {\ntemp_code += zeroPad(r.message.length, 3);\nconsole.log(temp_code );\n\n}\nelse{\ntemp_code += \"00\";\nconsole.log(temp_code );\n}\nwindow.alert(temp_code);\n// You probably want to add a section of code here that checks to see if the new code is an element of the list, \n// and increment the code if that customer code already exists (this only comes up if a customer is deleted)\n// Otherwise, you could create multiple customers with the same code.\n//Submit the customer code and refresh the field\nif (doc.item_group==\"Izdelava po naro\u010dilu\"){\ndoc.item_code=\"IPN\"+temp_code+\"_\"+doc.stranka;}\nelse{doc.item_code=doc.item_name;\n}\nrefresh_field(\"item_code\");\n}\n});\n}\t\nfunction zeroPad(num, places) {\nvar zero = places - num.toString().length + 1;\nreturn Array(+(zero > 0 && zero)).join(\"0\") + num;\n}window.alert(zero);\n}\n}", 
-  "script_type": "Client"
- }, 
- {
-  "docstatus": 0, 
-  "doctype": "Custom Script", 
   "dt": "Quotation", 
   "modified": "2016-10-20 20:09:41.864658", 
   "name": "Quotation-Client", 
@@ -30,7 +21,7 @@
   "docstatus": 0, 
   "doctype": "Custom Script", 
   "dt": "Sales Order", 
-  "modified": "2016-10-20 19:57:35.454197", 
+  "modified": "2016-11-09 11:16:17.197177", 
   "name": "Sales Order-Client", 
   "script": "frappe.ui.form.on(\"Sales Order\", \"validate\", function(frm) {\nsales_orders = []\n$.each(frm.doc.items, function(idx, row) {\ninList(sales_orders, row.prevdoc_docname) ? \"\": sales_orders.push(row.prevdoc_docname)\n});\nfrm.set_value(\"ponudba\", sales_orders.join(\",\"))\n});\n\nfrappe.ui.form.on('Sales Order', 'onload', function(frm){\n if (frm.doc.__islocal) { frm.set_value(\"delivery_date\", frappe.datetime.add_days(frappe.datetime.nowdate(), 7));}\n});\nfrappe.ui.form.on('Sales Order', 'onload', function(frm){\n   if (frm.doc.__islocal) { frm.set_value(\"veljavnost\", frappe.datetime.add_days(frappe.datetime.nowdate(), 7));}\n});\n\n", 
   "script_type": "Client"
