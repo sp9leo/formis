@@ -12,9 +12,9 @@
   "docstatus": 0, 
   "doctype": "Custom Script", 
   "dt": "Quotation", 
-  "modified": "2016-10-20 20:09:41.864658", 
+  "modified": "2016-11-11 15:25:42.605274", 
   "name": "Quotation-Client", 
-  "script": "frappe.ui.form.on('Quotation', 'onload', function(frm){\n   if (frm.doc.__islocal) { frm.set_value(\"veljavnost\", frappe.datetime.add_days(frappe.datetime.nowdate(), 7));}\n});\n\nfrappe.ui.form.on(\"Quotation\", \"stock\", function(frm) {\nfrappe.model.with_doc(\"calc\", frm.doc.stock, function() { \nvar stock_doc = frappe.model.get_doc(\"calc\", frm.doc.stock);\nfrm.set_value(\"customer\", stock_doc.customer);\n\nfrappe.model.with_doc(\"calc\", frm.doc.stock, function(index,row) {\nd = frm.add_child(\"items\");\nv = frm.add_child(\"items\");\n\n//levi stolpec v obstoje\u010dem dokumentu desni iz dokumenta odkjer isces podatke\nd.item_name = stock_doc.izdelek;\nd.description = stock_doc.opis;\nd.rate=stock_doc.total;\nd.item_code = \"IPN\";\nv.item_code = stock_doc.item;\nv.qty = stock_doc.area_total;\n\n//cur_frm.refresh_field(\"items\");\n//msgprint(\"items\");\n\nfrm.refresh_field(\"items\");\n}) \n})\n})\n\n", 
+  "script": "frappe.ui.form.on(\"Quotation\", \"stock\", function(frm) {\nfrappe.model.with_doc(\"calc\", frm.doc.stock, function() {\nvar s= frappe.model.get_doc(\"calc\", frm.doc.stock);\nfrm.set_value(\"customer\", s.customer);\nfrm.set_value(\"izdelek\", s.izdelek);\nfrm.set_value(\"opis\", s.opis);\nfrm.set_value(\"qty\", s.qty);\n\nfrappe.model.with_doc(\"calc\", frm.doc.stock, function(index){\n\nd = frm.add_child(\"items\");\nf = frm.add_child(\"items\");\nif(s.sekunde==1){f.qty=(s.qty*s.razrez)/60;} else{f.qty=(s.qty*s.razrez);}\nf.item_code=\"Razrez laserski\";\nd.item_code= s.doc_1;\nd.item_name= s.item;\nd.qty=s.area_total;\nd.description=d.item_name;\nf.description=s.izdelek\nf.item_name=f.item_code\nd.rate=s.price;\nf.rate=s.work_price\n\ncur_frm.refresh_field(\"items\");\n})\n});\n});\n", 
   "script_type": "Client"
  }, 
  {
@@ -69,6 +69,15 @@
   "modified": "2016-11-03 23:14:34.032335", 
   "name": "Address-Client", 
   "script": "cur_frm.add_fetch(\"posta\", \"post_number\", \"pincode\");\ncur_frm.add_fetch(\"posta\", \"kraj\", \"city\");", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "Delovni nalog", 
+  "modified": "2016-11-11 17:32:09.652578", 
+  "name": "Delovni nalog-Client", 
+  "script": "frappe.ui.form.on(\"Delovni nalog\", \"refresh\", function(frm) {\n    cur_frm.set_query(\"ponudba\", function() {\n        return {\n            \"filters\": {\"customer\":frm.doc.stranka\n                \n            }\n        };\n    });\n});\n\nfrappe.ui.form.on(\"Delovni nalog\", \"refresh\", function(frm) {\n    cur_frm.set_query(\"narocilo\", function() {\n        return {\n            \"filters\": {\"customer\":frm.doc.stranka\n                \n            }\n        };\n    });\n});\nfrappe.ui.form.on(\"Delovni nalog\", \"refresh\", function(frm) {\n    cur_frm.set_query(\"bom\", function() {\n        return {\n            \"filters\": {\"customer\":frm.doc.stranka\n                \n            }\n        };\n    });\n});\ncur_frm.add_fetch(\"bom\", \"izdelek\", \"izdelek\");\ncur_frm.add_fetch(\"bom\", \"opis\", \"opis\");\n\n\n", 
   "script_type": "Client"
  }
 ]
