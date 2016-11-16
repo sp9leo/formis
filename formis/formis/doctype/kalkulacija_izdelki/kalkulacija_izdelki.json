@@ -8,7 +8,7 @@
  "custom": 0, 
  "docstatus": 0, 
  "doctype": "DocType", 
- "document_type": "Document", 
+ "document_type": "Setup", 
  "editable_grid": 1, 
  "engine": "InnoDB", 
  "fields": [
@@ -1237,7 +1237,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2016-11-16 20:11:12.306714", 
+ "modified": "2016-11-16 21:33:14.191347", 
  "modified_by": "sandibobek@gmail.com", 
  "module": "Formis", 
  "name": "Kalkulacija izdelki", 
