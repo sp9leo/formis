@@ -8,9 +8,14 @@ app_description = "formis"
 app_icon = "octicon octicon-file-directory"
 app_color = "grey"
 app_email = "formis"
-app_version = "0.0.1"
+app_version = "0.0.2"
 app_license = "MIT"
+<<<<<<< HEAD
 fixtures = ["Workflow"]
+=======
+fixtures = ["Custom Field", "Property Setter","Custom Script", "Print Format", "Workflow"]
+
+>>>>>>> a6a25b934bfac4fa2d65e55b01e6fa664b48f8b7
 # Includes in <head>
 # ------------------
 
@@ -35,6 +40,10 @@ fixtures = ["Workflow"]
 
 # Generators
 # ----------
+website_context = {
+	"favicon": 	"/formis/public/favicon.png",
+	"splash_image": "/formis/public/formis_logo.png"
+}
 
 # automatically create page for each record of this doctype
 # website_generators = ["Web Page"]
@@ -107,4 +116,3 @@ notification_config = "formis.notifications.get_notification_config"
 # override_whitelisted_methods = {
 # 	"frappe.desk.doctype.event.event.get_events": "formis.event.get_events"
 # }
-

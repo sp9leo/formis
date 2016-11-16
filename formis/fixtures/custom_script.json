@@ -1,0 +1,83 @@
+[
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "PriceCalc", 
+  "modified": "2016-09-14 18:50:32.999921", 
+  "name": "PriceCalc-Client", 
+  "script": "//filtriraj cenik glede na izbran item\nfrappe.ui.form.on(\"PriceCalc\", \"refresh\", function(frm) {\n    cur_frm.set_query(\"cenik\", function() {\n        return {\n            \"filters\": {\n                \"item_name\": frm.doc.item,                \n            }\n        };\n    });\n});\n\n//pridobi podatke preko linka\ncur_frm.add_fetch(\"doc_1\", \"last_purchase_rate\", \"last_purchase_rate\");\ncur_frm.add_fetch(\"doc_1\", \"valuation_rate\", \"valuation_rate\");\ncur_frm.add_fetch(\"cenik\", \"price_list\", \"pricelist\");\n\n//izpisi ceno skupaj z enotami\nfrappe.ui.form.on(\"PriceCalc\", \"doc_1\", function(frm) {\n cur_frm.set_value(\"price1\", (frm.doc.price)+\" za \"+(frm.doc.item_uom));\n });\n\n //izracunaj povrsino//\n frappe.ui.form.on(\"PriceCalc\", \"x\", function(frm) {\n cur_frm.set_value(\"area\", (frm.doc.x*frm.doc.y)/10000);\n    \n });\nfrappe.ui.form.on(\"PriceCalc\", \"y\", function(frm) {\n cur_frm.set_value(\"area\", (frm.doc.x*frm.doc.y)/10000);\n \n });\nfrappe.ui.form.on(\"PriceCalc\", \"refresh\", function(frm) {\n cur_frm.set_value(\"area\", (frm.doc.x*frm.doc.y)/10000);\n  });\n//izracunaj ceno materiala\nfrappe.ui.form.on(\"PriceCalc\", \"refresh\", function(frm) {\n cur_frm.set_value(\"material_total\", (frm.doc.area*frm.doc.price));\n\n});\nfrappe.ui.form.on(\"PriceCalc\", \"man_price\", function(frm) {\n cur_frm.set_value(\"material_total1\", (frm.doc.area*frm.doc.man_price));\n\n});\nfrappe.ui.form.on(\"PriceCalc\", \"refresh\", function(frm) {\n cur_frm.set_value(\"material_total1\", (frm.doc.area*frm.doc.man_price));\n\n});\n//izracunaj ceno dela\nfrappe.ui.form.on(\"PriceCalc\", \"refresh\", function(frm) {\n cur_frm.set_value(\"work_total\", (frm.doc.work_price*frm.doc.razrez));\n\n });\nfrappe.ui.form.on(\"PriceCalc\", \"refresh\", function(frm) {\n cur_frm.set_value(\"total\", (frm.doc.work_total+frm.doc.material_total));\n\n });\nfrappe.ui.form.on(\"PriceCalc\", \"man_price\", function(frm) {\n cur_frm.set_value(\"total1\", (frm.doc.work_total+frm.doc.material_total1));\n\n });\nfrappe.ui.form.on(\"PriceCalc\", \"refresh\", function(frm) {\n cur_frm.set_value(\"total1\", (frm.doc.work_total+frm.doc.material_total1));\n\n });\nfrappe.ui.form.on(\"PriceCalc\", \"qty\", function(frm) {\n cur_frm.set_value(\"kos\", (frm.doc.total*frm.doc.qty));\n\n });\nfrappe.ui.form.on(\"PriceCalc\", \"refresh\", function(frm) {\n cur_frm.set_value(\"kos\", (frm.doc.total*frm.doc.qty));\n\n });\n\n//gumb za osvezitev kalkulacije\nfrappe.ui.form.on(\"PriceCalc\", \"button\", function(frm) {\nfrm.refresh();\n});\n\nfrappe.ui.form.on(\"PriceCalc\", \"validate\", function(frm) {\n    if (frm.doc.work_total < 4) {\n        msgprint(\"Vrednost naro\u010dila je manj\u0161a od 4\u20ac\");\n        validated = true;\n    }\n});\n", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "Quotation", 
+  "modified": "2016-11-11 15:25:42.605274", 
+  "name": "Quotation-Client", 
+  "script": "frappe.ui.form.on(\"Quotation\", \"stock\", function(frm) {\nfrappe.model.with_doc(\"calc\", frm.doc.stock, function() {\nvar s= frappe.model.get_doc(\"calc\", frm.doc.stock);\nfrm.set_value(\"customer\", s.customer);\nfrm.set_value(\"izdelek\", s.izdelek);\nfrm.set_value(\"opis\", s.opis);\nfrm.set_value(\"qty\", s.qty);\n\nfrappe.model.with_doc(\"calc\", frm.doc.stock, function(index){\n\nd = frm.add_child(\"items\");\nf = frm.add_child(\"items\");\nif(s.sekunde==1){f.qty=(s.qty*s.razrez)/60;} else{f.qty=(s.qty*s.razrez);}\nf.item_code=\"Razrez laserski\";\nd.item_code= s.doc_1;\nd.item_name= s.item;\nd.qty=s.area_total;\nd.description=d.item_name;\nf.description=s.izdelek\nf.item_name=f.item_code\nd.rate=s.price;\nf.rate=s.work_price\n\ncur_frm.refresh_field(\"items\");\n})\n});\n});\n", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "Sales Order", 
+  "modified": "2016-11-09 11:16:17.197177", 
+  "name": "Sales Order-Client", 
+  "script": "frappe.ui.form.on(\"Sales Order\", \"validate\", function(frm) {\nsales_orders = []\n$.each(frm.doc.items, function(idx, row) {\ninList(sales_orders, row.prevdoc_docname) ? \"\": sales_orders.push(row.prevdoc_docname)\n});\nfrm.set_value(\"ponudba\", sales_orders.join(\",\"))\n});\n\nfrappe.ui.form.on('Sales Order', 'onload', function(frm){\n if (frm.doc.__islocal) { frm.set_value(\"delivery_date\", frappe.datetime.add_days(frappe.datetime.nowdate(), 7));}\n});\nfrappe.ui.form.on('Sales Order', 'onload', function(frm){\n   if (frm.doc.__islocal) { frm.set_value(\"veljavnost\", frappe.datetime.add_days(frappe.datetime.nowdate(), 7));}\n});\n\n", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "Sales Invoice", 
+  "modified": "2016-10-09 04:41:08.268952", 
+  "name": "Sales Invoice-Client", 
+  "script": "cur_frm.cscript.custom_validate = function(doc) {\n    if (doc.naming_series == \"DEL1-MB-.###\")  {\n        msgprint(\"Na\u010din pla\u010dila je bil spremenjen v GOTOVINA!\");\ncur_frm.set_value(\"mode_of_payment\",\"Gotovina\");\n        validated = true;\n    }\n};\n\nfrappe.ui.form.on(\"Sales Invoice\", \"onload\", function(frm) {\nsales_orders = []\n$.each(frm.doc.items, function(idx, row) {\ninList(sales_orders, row.sales_order) ? \"\": sales_orders.push(row.sales_order)\n});\nfrm.set_value(\"sales_order\", sales_orders.join(\",\"))\n});\n\nfrappe.ui.form.on(\"Sales Invoice\", \"onload\", function(frm) {\ndelivery_notes = []\n$.each(frm.doc.items, function(idx, row) {\ninList(delivery_notes, row.delivery_note) ? \"\": delivery_notes.push(row.delivery_note)\n});\nfrm.set_value(\"delivery_note\", delivery_notes.join(\",\"))\n});\n", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "Delivery Note", 
+  "modified": "2016-10-09 03:33:39.486487", 
+  "name": "Delivery Note-Client", 
+  "script": "cur_frm.cscript.custom_refresh = function(doc) {\n    // use the __islocal value of doc, to check if the doc is saved or not\n    cur_frm.set_df_property(\"potrdilo\", \"read_only\", doc.status==\"Closed\");\n}\n\nfrappe.ui.form.on(\"Delivery Note\", \"validate\", function(frm) {\nsales_orders = []\n$.each(frm.doc.items, function(idx, row) {\ninList(sales_orders, row.against_sales_order) ? \"\": sales_orders.push(row.against_sales_order)\n});\nfrm.set_value(\"so_no\", sales_orders.join(\",\"))\n});", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "Kalkulator", 
+  "modified": "2016-08-16 13:26:34.601183", 
+  "name": "Kalkulator-Client", 
+  "script": "frappe.ui.form.on(\"Kalkulator\", \"len\", function(frm) {\ncur_frm.set_value(\"area\", (frm.doc.len* frm.doc.wid));\n });\n \n frappe.ui.form.on(\"Kalkulator\", \"wid\", function(frm) {\n cur_frm.set_value(\"area\", (frm.doc.len* frm.doc.wid))       \n });\n \n //izracunaj povrsino//\n frappe.ui.form.on(\"Kalkulator\", \"area\", function(frm) {\n cur_frm.set_value(\"mm2\", (frm.doc.area*100));\n cur_frm.set_value(\"m2\", (frm.doc.area/10000));\n if (frm.doc.area > 25) {cur_frm.set_value(\"areaovermin\", (frm.doc.area-25))}else {frm.set_value(\"areaovermin\",00)}\n     \n });\n \n //izracunaj znesek glede na povrsino//\n frappe.ui.form.on(\"Kalkulator\", \"refresh\", function(frm) {\n var d= (frm.doc.variable_price*frm.doc.areaovermin);\nif (frm.doc.area <= 25 && frm.doc.qty == 1){ frm.set_value(\"value\", frm.doc.current_price); } \n else {frm.set_value(\"value\",d+frm.doc.current_price);}\ncur_frm.set_value(\"valueovermin\",d);\n });\n \n //izracunaj ceno glede na kolicino//\n frappe.ui.form.on(\"Kalkulator\", \"qty\", function(frm) {\n var qty= frm.doc.qty;   \n if (qty>1 && qty<= 10) {frm.set_value(\"current_price\",frm.doc.p1);}\n else if (qty>10 && qty<=25) {frm.set_value(\"current_price\",frm.doc.p2);}\n else if (qty>25 && qty<=50) {frm.set_value(\"current_price\",frm.doc.p3);}\n else if (qty>50 && qty<=99) {frm.set_value(\"current_price\",frm.doc.p4);}\n else if (qty>99) {msgprint(\"cena po dogovoru\");}\n else {frm.set_value(\"current_price\",frm.doc.fixed_price);}\n frm.set_value(\"total_value\",frm.doc.value*frm.doc.qty);\nfrm.refresh();\n });\n\nfrappe.ui.form.on(\"Kalkulator\", \"refresh\", function(frm) {\n  frm.set_value(\"total_value\",frm.doc.value*frm.doc.qty);\n });\n \n frappe.ui.form.on(\"Kalkulator\", \"refresh\", function(frm) {\n    frm.add_custom_button(__(\"Do Something\"), function() {\n      //msgprint(\"hello\");\nfrm.refresh();\n });\n\t});", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "Izdelki Formis", 
+  "modified": "2016-08-16 18:09:20.356552", 
+  "name": "Izdelki Formis-Client", 
+  "script": "cur_frm.add_fetch(\"bom\", \"total_cost\", \"strosek\");\ncur_frm.add_fetch(\"bom\", \"raw_material_cost\", \"strosek_materiala\");\ncur_frm.add_fetch(\"bom\", \"operating_cost\", \"strosek_izdelave\");\ncur_frm.add_fetch(\"bom\", \"rm_cost_as_per\", \"rm_cost_as_per\");\ncur_frm.add_fetch(\"bom\", \"buying_price_list\", \"buying_price_list\");\n", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "Address", 
+  "modified": "2016-11-03 23:14:34.032335", 
+  "name": "Address-Client", 
+  "script": "cur_frm.add_fetch(\"posta\", \"post_number\", \"pincode\");\ncur_frm.add_fetch(\"posta\", \"kraj\", \"city\");", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "Delovni nalog", 
+  "modified": "2016-11-11 17:32:09.652578", 
+  "name": "Delovni nalog-Client", 
+  "script": "frappe.ui.form.on(\"Delovni nalog\", \"refresh\", function(frm) {\n    cur_frm.set_query(\"ponudba\", function() {\n        return {\n            \"filters\": {\"customer\":frm.doc.stranka\n                \n            }\n        };\n    });\n});\n\nfrappe.ui.form.on(\"Delovni nalog\", \"refresh\", function(frm) {\n    cur_frm.set_query(\"narocilo\", function() {\n        return {\n            \"filters\": {\"customer\":frm.doc.stranka\n                \n            }\n        };\n    });\n});\nfrappe.ui.form.on(\"Delovni nalog\", \"refresh\", function(frm) {\n    cur_frm.set_query(\"bom\", function() {\n        return {\n            \"filters\": {\"customer\":frm.doc.stranka\n                \n            }\n        };\n    });\n});\ncur_frm.add_fetch(\"bom\", \"izdelek\", \"izdelek\");\ncur_frm.add_fetch(\"bom\", \"opis\", \"opis\");\n\n\n", 
+  "script_type": "Client"
+ }
+]

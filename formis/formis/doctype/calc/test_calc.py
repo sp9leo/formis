@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 import frappe
 import unittest
 
-# test_records = frappe.get_test_records('Kalkulacija')
+# test_records = frappe.get_test_records('calc')
 
-class TestKalkulacija(unittest.TestCase):
+class Testcalc(unittest.TestCase):
 	pass
