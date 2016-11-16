@@ -2,16 +2,24 @@
  "allow_copy": 0, 
  "allow_import": 1, 
  "allow_rename": 0, 
+<<<<<<< HEAD
+ "autoname": "INTER-.####", 
+ "creation": "2016-08-10 17:42:20.484955", 
+=======
  "autoname": "INTER-.YY.MM.DD.##", 
  "beta": 0, 
  "creation": "2016-08-16 14:11:53.688457", 
+>>>>>>> a6a25b934bfac4fa2d65e55b01e6fa664b48f8b7
  "custom": 0, 
  "default_print_format": "Delovni nalog", 
  "description": "Delovni nalogi", 
  "docstatus": 0, 
  "doctype": "DocType", 
  "document_type": "Document", 
+<<<<<<< HEAD
+=======
  "editable_grid": 0, 
+>>>>>>> a6a25b934bfac4fa2d65e55b01e6fa664b48f8b7
  "fields": [
   {
    "allow_on_submit": 0, 
@@ -169,6 +177,8 @@
    "allow_on_submit": 0, 
    "bold": 0, 
    "collapsible": 0, 
+<<<<<<< HEAD
+=======
    "fieldname": "strosek_izdelave", 
    "fieldtype": "Data", 
    "hidden": 0, 
@@ -244,6 +254,7 @@
    "allow_on_submit": 0, 
    "bold": 0, 
    "collapsible": 0, 
+>>>>>>> a6a25b934bfac4fa2d65e55b01e6fa664b48f8b7
    "fieldname": "izdelava", 
    "fieldtype": "Column Break", 
    "hidden": 0, 
@@ -495,6 +506,8 @@
   {
    "allow_on_submit": 0, 
    "bold": 0, 
+<<<<<<< HEAD
+=======
    "collapsible": 0, 
    "fieldname": "material", 
    "fieldtype": "Link", 
@@ -599,6 +612,7 @@
   {
    "allow_on_submit": 0, 
    "bold": 0, 
+>>>>>>> a6a25b934bfac4fa2d65e55b01e6fa664b48f8b7
    "collapsible": 1, 
    "fieldname": "docstatus", 
    "fieldtype": "Section Break", 
@@ -701,14 +715,21 @@
  "hide_toolbar": 0, 
  "icon": "octicon-tools", 
  "idx": 0, 
+<<<<<<< HEAD
+=======
  "image_view": 0, 
+>>>>>>> a6a25b934bfac4fa2d65e55b01e6fa664b48f8b7
  "in_create": 0, 
  "in_dialog": 0, 
  "is_submittable": 1, 
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
+<<<<<<< HEAD
+ "modified": "2016-08-10 17:59:04.460964", 
+=======
  "modified": "2016-10-25 07:58:24.841752", 
+>>>>>>> a6a25b934bfac4fa2d65e55b01e6fa664b48f8b7
  "modified_by": "Administrator", 
  "module": "Formis", 
  "name": "Delovni Nalog Interni", 
@@ -736,7 +757,11 @@
    "write": 1
   }, 
   {
+<<<<<<< HEAD
+   "amend": 1, 
+=======
    "amend": 0, 
+>>>>>>> a6a25b934bfac4fa2d65e55b01e6fa664b48f8b7
    "apply_user_permissions": 0, 
    "cancel": 1, 
    "create": 1, 
@@ -756,12 +781,19 @@
    "write": 1
   }
  ], 
+<<<<<<< HEAD
+=======
  "quick_entry": 0, 
+>>>>>>> a6a25b934bfac4fa2d65e55b01e6fa664b48f8b7
  "read_only": 0, 
  "read_only_onload": 0, 
  "search_fields": "", 
  "sort_field": "modified", 
  "sort_order": "DESC", 
+<<<<<<< HEAD
+ "title_field": "referenca"
+=======
  "title_field": "stranka", 
  "track_seen": 0
+>>>>>>> a6a25b934bfac4fa2d65e55b01e6fa664b48f8b7
 }
