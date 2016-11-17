@@ -2,6 +2,15 @@
  {
   "docstatus": 0, 
   "doctype": "Custom Script", 
+  "dt": "ToDo", 
+  "modified": "2016-11-15 21:50:01.031841", 
+  "name": "ToDo-Client", 
+  "script": "cur_frm.add_fetch(\"reference_name\", \"description\", \"description\");\ncur_frm.add_fetch(\"reference_name\", \"subject\", \"ref_name\");", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
   "dt": "PriceCalc", 
   "modified": "2016-09-14 18:50:32.999921", 
   "name": "PriceCalc-Client", 
