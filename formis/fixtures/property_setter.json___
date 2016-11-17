@@ -101,7 +101,11 @@
   "property_type": "Text", 
   "value": "SR/"
  }, 
+<<<<<<< HEAD
  {
+=======
+  {
+>>>>>>> 26b37b6cda2ae22cf624754e96d14b928b894994
   "_assign": null, 
   "_comments": null, 
   "_liked_by": null, 
@@ -543,6 +547,24 @@
   "property_type": "Text", 
   "value": "item_code:item_name"
  }, 
+ {
+  "_assign": null, 
+  "_comments": null, 
+  "_liked_by": null, 
+  "_user_tags": null, 
+  "default_value": null, 
+  "doc_type": "Quotation Item", 
+  "docstatus": 0, 
+  "doctype": "Property Setter", 
+  "doctype_or_field": "DocType", 
+  "field_name": null, 
+  "modified": "2016-10-07 23:14:28.186060", 
+  "name": "Quotation Item-read_only_onload", 
+  "property": "read_only_onload", 
+  "property_type": "Check", 
+  "value": null
+ }, 
+ 
  {
   "_assign": null, 
   "_comments": null, 
@@ -3279,39 +3301,5 @@
   "property": "read_only_onload", 
   "property_type": "Check", 
   "value": null
- }, 
- {
-  "_assign": null, 
-  "_comments": null, 
-  "_liked_by": null, 
-  "_user_tags": null, 
-  "default_value": null, 
-  "doc_type": "Quotation Item", 
-  "docstatus": 0, 
-  "doctype": "Property Setter", 
-  "doctype_or_field": "DocType", 
-  "field_name": null, 
-  "modified": "2016-11-17 16:52:59.009071", 
-  "name": "Quotation Item-read_only_onload", 
-  "property": "read_only_onload", 
-  "property_type": "Check", 
-  "value": null
- }, 
- {
-  "_assign": null, 
-  "_comments": null, 
-  "_liked_by": null, 
-  "_user_tags": null, 
-  "default_value": null, 
-  "doc_type": "Quotation Item", 
-  "docstatus": 0, 
-  "doctype": "Property Setter", 
-  "doctype_or_field": "DocField", 
-  "field_name": "qty", 
-  "modified": "2016-11-17 16:52:59.045870", 
-  "name": "Quotation Item-qty-precision", 
-  "property": "precision", 
-  "property_type": "Select", 
-  "value": ""
  }
 ]

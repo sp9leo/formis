@@ -1,25 +1,5 @@
 [
  {
-  "align_labels_left": 0, 
-  "css": null, 
-  "custom_format": 1, 
-  "disabled": 0, 
-  "doc_type": "Sales Invoice", 
-  "docstatus": 0, 
-  "doctype": "Print Format", 
-  "font": "Default", 
-  "format_data": null, 
-  "html": "<style>\n\t.print-format table, .print-format tr, \n\t.print-format td, .print-format div, .print-format p {\n\t\tvertical-align: middle;\nfont-size:12px;\n\t}\n\t@media screen {\n\t\t.print-format {\n\t\t\twidth: 146mm;\n\t\t\tpadding: 3mm;\n\t\t\tmin-height: 104mm;\n}\n\n\t\n</style>\n<div style=\"position: relative; top:0;\">\n\t<div style=\"width:14.6cm;height:10.6cm;\">   \n        <span style=\"top:2.6cm; left:1.5cm; width:7cm; Word-wrap:break-word; position:absolute;\">\n        {{doc.customer}}</span>\n        <span style=\"top:3.7cm; left:1.5cm; width:7cm; Word-wrap:break-word;position:absolute;\">\n{{ frappe.db.get_value(\"Address\", {\"customer\": doc.customer}, \"address_line1\")}},{{ frappe.db.get_value(\"Address\", {\"customer\": doc.customer}, \"address_line2\") or \"\"}}\n</span>\n        <span style=\"top:4.7cm; left:1.5cm;width:2cm; Word-wrap:break-word; position:absolute;\">\n     {{ frappe.db.get_value(\"Address\", {\"customer\": doc.customer}, \"pincode\") }}\n        </span> \n        <span style=\"top:4.7cm; left:4.5cm; width:4cm; Word-wrap:break-word;position:absolute;\">\n       {{ frappe.db.get_value(\"Address\", {\"customer\": doc.customer}, \"city\") }} ({{ frappe.db.get_value(\"Address\", {\"customer\": doc.customer}, \"country\") or \"\"}})\n        </span>\n    </div>\n</div>", 
-  "line_breaks": 0, 
-  "modified": "2016-11-15 19:18:05.776382", 
-  "module": "Accounts", 
-  "name": "PotrdiloPosiljka1", 
-  "print_format_builder": 0, 
-  "print_format_type": "Server", 
-  "show_section_headings": 0, 
-  "standard": "No"
- }, 
- {
   "align_labels_left": 1, 
   "css": "", 
   "custom_format": 1, 
