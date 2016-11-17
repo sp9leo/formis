@@ -3297,21 +3297,4 @@
   "property_type": "Check", 
   "value": null
  }, 
- {
-  "_assign": null, 
-  "_comments": null, 
-  "_liked_by": null, 
-  "_user_tags": null, 
-  "default_value": null, 
-  "doc_type": "Quotation Item", 
-  "docstatus": 0, 
-  "doctype": "Property Setter", 
-  "doctype_or_field": "DocField", 
-  "field_name": "qty", 
-  "modified": "2016-11-17 16:52:59.045870", 
-  "name": "Quotation Item-qty-precision", 
-  "property": "precision", 
-  "property_type": "Select", 
-  "value": ""
- }
-]
+ ]
