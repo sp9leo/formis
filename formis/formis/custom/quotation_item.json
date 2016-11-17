@@ -2,30 +2,7 @@
  "custom_fields": [], 
  "doctype": "Quotation Item", 
  "property_setters": [
-  {
-   "_assign": null, 
-   "_comments": null, 
-   "_liked_by": null, 
-   "_user_tags": null, 
-   "creation": "2016-11-17 16:52:59.045870", 
-   "default_value": null, 
-   "doc_type": "Quotation Item", 
-   "docstatus": 0, 
-   "doctype_or_field": "DocField", 
-   "field_name": "qty", 
-   "idx": 0, 
-   "modified": "2016-11-17 16:52:59.045870", 
-   "modified_by": "Administrator", 
-   "name": "Quotation Item-qty-precision", 
-   "owner": "Administrator", 
-   "parent": null, 
-   "parentfield": null, 
-   "parenttype": null, 
-   "property": "precision", 
-   "property_type": "Select", 
-   "value": ""
-  }, 
-  {
+    {
    "_assign": null, 
    "_comments": null, 
    "_liked_by": null, 
