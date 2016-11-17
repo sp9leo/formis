@@ -3296,5 +3296,5 @@
   "property": "read_only_onload", 
   "property_type": "Check", 
   "value": null
- }, 
+ }
  ]
