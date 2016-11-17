@@ -4,7 +4,7 @@
   "doctype": "Workflow", 
   "document_type": "Izdelki Formis", 
   "is_active": 1, 
-  "modified": "2016-08-16 15:17:30.150562", 
+  "modified": "2016-11-16 21:24:59.092421", 
   "name": "Izdelki formis", 
   "override_status": 0, 
   "states": [
@@ -12,20 +12,34 @@
     "allow_edit": "System Manager", 
     "doc_status": "0", 
     "message": null, 
-    "state": "Za izdelavo", 
-    "update_field": null, 
-    "update_value": null
+    "state": "osnutek", 
+    "update_field": "status", 
+    "update_value": "osnutek"
    }, 
    {
     "allow_edit": "System Manager", 
     "doc_status": "0", 
     "message": null, 
     "state": "V pripravi", 
-    "update_field": null, 
-    "update_value": null
+    "update_field": "status", 
+    "update_value": "priprava"
+   }, 
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "0", 
+    "message": null, 
+    "state": "Za izdelavo", 
+    "update_field": "status", 
+    "update_value": "izdelava"
    }
   ], 
   "transitions": [
+   {
+    "action": "Potrdi", 
+    "allowed": "System Manager", 
+    "next_state": "V pripravi", 
+    "state": "osnutek"
+   }, 
    {
     "action": "Potrdi", 
     "allowed": "System Manager", 
@@ -33,9 +47,15 @@
     "state": "V pripravi"
    }, 
    {
-    "action": "Review", 
+    "action": "Popravi", 
     "allowed": "System Manager", 
     "next_state": "V pripravi", 
+    "state": "Za izdelavo"
+   }, 
+   {
+    "action": "Prekli\u010di", 
+    "allowed": "System Manager", 
+    "next_state": "osnutek", 
     "state": "Za izdelavo"
    }
   ], 
@@ -47,7 +67,7 @@
   "doctype": "Workflow", 
   "document_type": "Delovni nalog", 
   "is_active": 1, 
-  "modified": "2016-08-16 16:18:21.578883", 
+  "modified": "2016-11-15 18:12:04.759622", 
   "name": "Delovni nalog", 
   "override_status": 0, 
   "states": [
@@ -90,6 +110,14 @@
     "state": "\u010caka stranko", 
     "update_field": null, 
     "update_value": null
+   }, 
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "0", 
+    "message": null, 
+    "state": "Izdelano", 
+    "update_field": null, 
+    "update_value": null
    }
   ], 
   "transitions": [
@@ -122,6 +150,12 @@
     "allowed": "System Manager", 
     "next_state": "Preklicano", 
     "state": "Zaklju\u010deno"
+   }, 
+   {
+    "action": "Zaklju\u010di izdelavo", 
+    "allowed": "System Manager", 
+    "next_state": "Izdelano", 
+    "state": "V izdelavi"
    }
   ], 
   "workflow_name": "Delovni nalog", 
@@ -210,6 +244,170 @@
    }
   ], 
   "workflow_name": "Delovni nalog Interni", 
+  "workflow_state_field": "workflow_state"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Workflow", 
+  "document_type": "Sales Order", 
+  "is_active": 0, 
+  "modified": "2016-11-15 21:34:31.310230", 
+  "name": "Sales Order", 
+  "override_status": 1, 
+  "states": [
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "0", 
+    "message": null, 
+    "state": "V pripravi", 
+    "update_field": "status", 
+    "update_value": null
+   }, 
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "0", 
+    "message": null, 
+    "state": "\u010caka stranko", 
+    "update_field": "", 
+    "update_value": null
+   }, 
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "0", 
+    "message": null, 
+    "state": "V izdelavi", 
+    "update_field": null, 
+    "update_value": null
+   }, 
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "0", 
+    "message": null, 
+    "state": "Zaklju\u010deno", 
+    "update_field": null, 
+    "update_value": null
+   }
+  ], 
+  "transitions": [
+   {
+    "action": "Potrdi", 
+    "allowed": "System Manager", 
+    "next_state": "V izdelavi", 
+    "state": "V pripravi"
+   }, 
+   {
+    "action": "Zaklju\u010di", 
+    "allowed": "System Manager", 
+    "next_state": "Zaklju\u010deno", 
+    "state": "V izdelavi"
+   }
+  ], 
+  "workflow_name": "Sales Order", 
+  "workflow_state_field": "workflow_state"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Workflow", 
+  "document_type": "calc", 
+  "is_active": 1, 
+  "modified": "2016-11-16 21:31:06.468387", 
+  "name": "izracun", 
+  "override_status": 0, 
+  "states": [
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "0", 
+    "message": null, 
+    "state": "osnutek", 
+    "update_field": "status", 
+    "update_value": "osnutek"
+   }, 
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "0", 
+    "message": null, 
+    "state": "V pripravi", 
+    "update_field": "status", 
+    "update_value": "v pripravi"
+   }, 
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "0", 
+    "message": null, 
+    "state": "Potrjeno", 
+    "update_field": "status", 
+    "update_value": "potrjeno"
+   }, 
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "0", 
+    "message": null, 
+    "state": "Za izdelavo", 
+    "update_field": "status", 
+    "update_value": "za izdelavo"
+   }, 
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "0", 
+    "message": null, 
+    "state": "Izdelano", 
+    "update_field": "status", 
+    "update_value": "izdelano"
+   }, 
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "0", 
+    "message": null, 
+    "state": "Zaklju\u010deno", 
+    "update_field": "status", 
+    "update_value": "zaklju\u010deno"
+   }
+  ], 
+  "transitions": [
+   {
+    "action": "Potrdi", 
+    "allowed": "System Manager", 
+    "next_state": "V pripravi", 
+    "state": "osnutek"
+   }, 
+   {
+    "action": "Prekli\u010di", 
+    "allowed": "System Manager", 
+    "next_state": "osnutek", 
+    "state": "V pripravi"
+   }, 
+   {
+    "action": "Potrdi", 
+    "allowed": "System Manager", 
+    "next_state": "Potrjeno", 
+    "state": "V pripravi"
+   }, 
+   {
+    "action": "Prekli\u010di", 
+    "allowed": "System Manager", 
+    "next_state": "osnutek", 
+    "state": "Potrjeno"
+   }, 
+   {
+    "action": "Zaklju\u010di", 
+    "allowed": "System Manager", 
+    "next_state": "Zaklju\u010deno", 
+    "state": "Potrjeno"
+   }, 
+   {
+    "action": "Prekli\u010di", 
+    "allowed": "System Manager", 
+    "next_state": "V pripravi", 
+    "state": "Zaklju\u010deno"
+   }, 
+   {
+    "action": "Zaklju\u010di", 
+    "allowed": "System Manager", 
+    "next_state": "Zaklju\u010deno", 
+    "state": "V pripravi"
+   }
+  ], 
+  "workflow_name": "izracun", 
   "workflow_state_field": "workflow_state"
  }
 ]

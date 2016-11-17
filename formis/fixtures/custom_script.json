@@ -39,9 +39,9 @@
   "docstatus": 0, 
   "doctype": "Custom Script", 
   "dt": "Delivery Note", 
-  "modified": "2016-10-09 03:33:39.486487", 
+  "modified": "2016-11-15 21:14:26.652166", 
   "name": "Delivery Note-Client", 
-  "script": "cur_frm.cscript.custom_refresh = function(doc) {\n    // use the __islocal value of doc, to check if the doc is saved or not\n    cur_frm.set_df_property(\"potrdilo\", \"read_only\", doc.status==\"Closed\");\n}\n\nfrappe.ui.form.on(\"Delivery Note\", \"validate\", function(frm) {\nsales_orders = []\n$.each(frm.doc.items, function(idx, row) {\ninList(sales_orders, row.against_sales_order) ? \"\": sales_orders.push(row.against_sales_order)\n});\nfrm.set_value(\"so_no\", sales_orders.join(\",\"))\n});", 
+  "script": "//cur_frm.cscript.custom_refresh = function(doc) {\n    // use the __islocal value of doc, to check if the doc is saved or not\n   // cur_frm.set_df_property(\"potrdilo\", \"read_only\", doc.status==\"Closed\");}\n\nfrappe.ui.form.on(\"Delivery Note\", \"validate\", function(frm) {\nsales_orders = []\n$.each(frm.doc.items, function(idx, row) {\ninList(sales_orders, row.against_sales_order) ? \"\": sales_orders.push(row.against_sales_order)\n});\nfrm.set_value(\"so_no\", sales_orders.join(\",\"))\n});\n\nfrappe.ui.form.on(\"Delivery Note\", {\n    refresh: function(frm) {\n        // use the __islocal value of doc, to check if the doc is saved or not\n        frm.set_df_property(\"datum_dostave\", \"read_only\", frm.doc.status==\"Closed\");\n    }\n});\nfrappe.ui.form.on(\"Delivery Note\", {\n    refresh: function(frm) {\n        // use the __islocal value of doc, to check if the doc is saved or not\n        frm.set_df_property(\"nacin_dostave\", \"read_only\", frm.doc.status==\"Closed\");\n    }\n});\nfrappe.ui.form.on(\"Delivery Note\", {\n    refresh: function(frm) {\n        // use the __islocal value of doc, to check if the doc is saved or not\n        frm.set_df_property(\"potrdilo\", \"read_only\", frm.doc.status==\"Closed\");\n    }\n});", 
   "script_type": "Client"
  }, 
  {
@@ -57,9 +57,9 @@
   "docstatus": 0, 
   "doctype": "Custom Script", 
   "dt": "Izdelki Formis", 
-  "modified": "2016-08-16 18:09:20.356552", 
+  "modified": "2016-11-16 21:26:45.395450", 
   "name": "Izdelki Formis-Client", 
-  "script": "cur_frm.add_fetch(\"bom\", \"total_cost\", \"strosek\");\ncur_frm.add_fetch(\"bom\", \"raw_material_cost\", \"strosek_materiala\");\ncur_frm.add_fetch(\"bom\", \"operating_cost\", \"strosek_izdelave\");\ncur_frm.add_fetch(\"bom\", \"rm_cost_as_per\", \"rm_cost_as_per\");\ncur_frm.add_fetch(\"bom\", \"buying_price_list\", \"buying_price_list\");\n", 
+  "script": "frappe.ui.form.on(\"Izdelki Formis\", \"cost\", function(frm) {\nfrappe.model.with_doc(\"Kalkulacija izdelki\", frm.doc.cost, function() {\nvar s= frappe.model.get_doc(\"Kalkulacija izdelki\", frm.doc.cost);\nfrm.set_value(\"strosek_izdelave\", s.work_kos);\nfrm.set_value(\"produkt\", s.izdelek);\nfrm.set_value(\"opis\", s.opis);\nfrm.set_value(\"poraba_materiala\", s.area + \" m2\");\nif(s.sekunde==1) {frm.set_value(\"cas_izdelave\", s.razrez +\" sekund\")}\nelse{frm.set_value(\"cas_izdelave\", s.razrez +\" minut\")};\nfrm.set_value(\"strosek_materiala\", s.material_kos);\nfrm.set_value(\"material\", s.doc_1);\nfrm.set_value(\"total_cost\", s.work_kos+s.material_kos);\nfrm.set_value(\"dimenzija\", s.x+\"x\"+s.y);\n})\n});\n\nfrappe.ui.form.on(\"Izdelki Formis\", {\n    refresh: function(frm) {\n        // use the __islocal value of doc, to check if the doc is saved or not\n        frm.set_df_property(\"strosek_materiala\", \"read_only\", frm.doc.status==\"izdelava\");\nfrm.set_df_property(\"strosek_izdelave\", \"read_only\", frm.doc.status==\"izdelava\");\nfrm.set_df_property(\"total_cost\", \"read_only\", frm.doc.status==\"izdelava\");\nfrm.set_df_property(\"cost\", \"read_only\", frm.doc.status==\"izdelava\");\n    }\n});", 
   "script_type": "Client"
  }, 
  {
@@ -78,6 +78,15 @@
   "modified": "2016-11-11 17:32:09.652578", 
   "name": "Delovni nalog-Client", 
   "script": "frappe.ui.form.on(\"Delovni nalog\", \"refresh\", function(frm) {\n    cur_frm.set_query(\"ponudba\", function() {\n        return {\n            \"filters\": {\"customer\":frm.doc.stranka\n                \n            }\n        };\n    });\n});\n\nfrappe.ui.form.on(\"Delovni nalog\", \"refresh\", function(frm) {\n    cur_frm.set_query(\"narocilo\", function() {\n        return {\n            \"filters\": {\"customer\":frm.doc.stranka\n                \n            }\n        };\n    });\n});\nfrappe.ui.form.on(\"Delovni nalog\", \"refresh\", function(frm) {\n    cur_frm.set_query(\"bom\", function() {\n        return {\n            \"filters\": {\"customer\":frm.doc.stranka\n                \n            }\n        };\n    });\n});\ncur_frm.add_fetch(\"bom\", \"izdelek\", \"izdelek\");\ncur_frm.add_fetch(\"bom\", \"opis\", \"opis\");\n\n\n", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "ToDo", 
+  "modified": "2016-11-15 21:50:01.031841", 
+  "name": "ToDo-Client", 
+  "script": "cur_frm.add_fetch(\"reference_name\", \"description\", \"description\");\ncur_frm.add_fetch(\"reference_name\", \"subject\", \"ref_name\");", 
   "script_type": "Client"
  }
 ]
