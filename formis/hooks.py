@@ -10,7 +10,6 @@ app_color = "grey"
 app_email = "formis"
 app_version = "0.0.2"
 app_license = "MIT"
-fixtures = ["Workflow"]
 fixtures = ["Custom Field", "Property Setter","Custom Script", "Print Format", "Workflow"]
 
 # Includes in <head>
