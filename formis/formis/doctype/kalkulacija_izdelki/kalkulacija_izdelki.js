@@ -1,14 +1,6 @@
 // Copyright (c) 2016, formis and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on('Kalkulacija izdelki', {
-	refresh: function(frm) {
-
-	}
-});
-// Copyright (c) 2016, formis and contributors
-// For license information, please see license.txt
-
 //filtriraj cenik glede na izbran item
 frappe.ui.form.on("Kalkulacija izdelki", "refresh", function(frm) {
     cur_frm.set_query("cenik", function() {
