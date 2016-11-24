@@ -11,15 +11,6 @@
  {
   "docstatus": 0, 
   "doctype": "Custom Script", 
-  "dt": "Quotation", 
-  "modified": "2016-11-11 15:25:42.605274", 
-  "name": "Quotation-Client", 
-  "script": "frappe.ui.form.on(\"Quotation\", \"stock\", function(frm) {\nfrappe.model.with_doc(\"calc\", frm.doc.stock, function() {\nvar s= frappe.model.get_doc(\"calc\", frm.doc.stock);\nfrm.set_value(\"customer\", s.customer);\nfrm.set_value(\"izdelek\", s.izdelek);\nfrm.set_value(\"opis\", s.opis);\nfrm.set_value(\"qty\", s.qty);\n\nfrappe.model.with_doc(\"calc\", frm.doc.stock, function(index){\n\nd = frm.add_child(\"items\");\nf = frm.add_child(\"items\");\nif(s.sekunde==1){f.qty=(s.qty*s.razrez)/60;} else{f.qty=(s.qty*s.razrez);}\nf.item_code=\"Razrez laserski\";\nd.item_code= s.doc_1;\nd.item_name= s.item;\nd.qty=s.area_total;\nd.description=d.item_name;\nf.description=s.izdelek\nf.item_name=f.item_code\nd.rate=s.price;\nf.rate=s.work_price\n\ncur_frm.refresh_field(\"items\");\n})\n});\n});\n", 
-  "script_type": "Client"
- }, 
- {
-  "docstatus": 0, 
-  "doctype": "Custom Script", 
   "dt": "Sales Order", 
   "modified": "2016-11-09 11:16:17.197177", 
   "name": "Sales Order-Client", 
@@ -56,15 +47,6 @@
  {
   "docstatus": 0, 
   "doctype": "Custom Script", 
-  "dt": "Izdelki Formis", 
-  "modified": "2016-11-16 21:26:45.395450", 
-  "name": "Izdelki Formis-Client", 
-  "script": "frappe.ui.form.on(\"Izdelki Formis\", \"cost\", function(frm) {\nfrappe.model.with_doc(\"Kalkulacija izdelki\", frm.doc.cost, function() {\nvar s= frappe.model.get_doc(\"Kalkulacija izdelki\", frm.doc.cost);\nfrm.set_value(\"strosek_izdelave\", s.work_kos);\nfrm.set_value(\"produkt\", s.izdelek);\nfrm.set_value(\"opis\", s.opis);\nfrm.set_value(\"poraba_materiala\", s.area + \" m2\");\nif(s.sekunde==1) {frm.set_value(\"cas_izdelave\", s.razrez +\" sekund\")}\nelse{frm.set_value(\"cas_izdelave\", s.razrez +\" minut\")};\nfrm.set_value(\"strosek_materiala\", s.material_kos);\nfrm.set_value(\"material\", s.doc_1);\nfrm.set_value(\"total_cost\", s.work_kos+s.material_kos);\nfrm.set_value(\"dimenzija\", s.x+\"x\"+s.y);\n})\n});\n\nfrappe.ui.form.on(\"Izdelki Formis\", {\n    refresh: function(frm) {\n        // use the __islocal value of doc, to check if the doc is saved or not\n        frm.set_df_property(\"strosek_materiala\", \"read_only\", frm.doc.status==\"izdelava\");\nfrm.set_df_property(\"strosek_izdelave\", \"read_only\", frm.doc.status==\"izdelava\");\nfrm.set_df_property(\"total_cost\", \"read_only\", frm.doc.status==\"izdelava\");\nfrm.set_df_property(\"cost\", \"read_only\", frm.doc.status==\"izdelava\");\n    }\n});", 
-  "script_type": "Client"
- }, 
- {
-  "docstatus": 0, 
-  "doctype": "Custom Script", 
   "dt": "Address", 
   "modified": "2016-11-03 23:14:34.032335", 
   "name": "Address-Client", 
@@ -87,6 +69,15 @@
   "modified": "2016-11-15 21:50:01.031841", 
   "name": "ToDo-Client", 
   "script": "cur_frm.add_fetch(\"reference_name\", \"description\", \"description\");\ncur_frm.add_fetch(\"reference_name\", \"subject\", \"ref_name\");", 
+  "script_type": "Client"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Custom Script", 
+  "dt": "Quotation", 
+  "modified": "2016-11-22 12:55:59.906297", 
+  "name": "Quotation-Client", 
+  "script": "frappe.ui.form.on(\"Quotation\", \"stock\", function(frm) {\nfrappe.model.with_doc(\"Kalkulacija stranke\", frm.doc.stock, function() {\nvar s= frappe.model.get_doc(\"Kalkulacija stranke\", frm.doc.stock);\nfrm.set_value(\"customer\", s.customer);\nfrm.set_value(\"izdelek\", s.izdelek);\nfrm.set_value(\"opis\", s.opis);\nfrm.set_value(\"qty\", s.qty);\n\nfrappe.model.with_doc(\"Kalkulacija stranke\", frm.doc.stock, function(index){\n\nd = frm.add_child(\"items\");\nf = frm.add_child(\"items\");\nif(s.sekunde==1){f.qty=(s.qty*s.razrez)/60;} else{f.qty=(s.qty*s.razrez);}\nf.item_code=\"Razrez laserski\";\nd.item_code= s.doc_1;\nd.item_name= s.item;\nd.qty=s.area_total;\nd.description=d.item_name;\nf.description=s.izdelek\nf.item_name=f.item_code\nd.rate=s.price;\nf.rate=s.work_price\n\ncur_frm.refresh_field(\"items\");\n})\n});\n});\n", 
   "script_type": "Client"
  }
 ]

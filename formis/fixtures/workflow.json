@@ -2,10 +2,10 @@
  {
   "docstatus": 0, 
   "doctype": "Workflow", 
-  "document_type": "Izdelki Formis", 
+  "document_type": "Kalkulacija stranke", 
   "is_active": 1, 
-  "modified": "2016-11-16 21:24:59.092421", 
-  "name": "Izdelki formis", 
+  "modified": "2016-11-22 12:32:53.078653", 
+  "name": "Kalkulacija stranke", 
   "override_status": 0, 
   "states": [
    {
@@ -22,7 +22,15 @@
     "message": null, 
     "state": "V pripravi", 
     "update_field": "status", 
-    "update_value": "priprava"
+    "update_value": "v pripravi"
+   }, 
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "0", 
+    "message": null, 
+    "state": "Potrjeno", 
+    "update_field": "status", 
+    "update_value": "potrjeno"
    }, 
    {
     "allow_edit": "System Manager", 
@@ -30,6 +38,111 @@
     "message": null, 
     "state": "Za izdelavo", 
     "update_field": "status", 
+    "update_value": "za izdelavo"
+   }, 
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "0", 
+    "message": null, 
+    "state": "Izdelano", 
+    "update_field": "status", 
+    "update_value": "izdelano"
+   }, 
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "0", 
+    "message": null, 
+    "state": "Zaklju\u010deno", 
+    "update_field": "status", 
+    "update_value": "zaklju\u010deno"
+   }, 
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "0", 
+    "message": null, 
+    "state": "Preklicano", 
+    "update_field": "status", 
+    "update_value": "Preklicano"
+   }
+  ], 
+  "transitions": [
+   {
+    "action": "Potrdi", 
+    "allowed": "System Manager", 
+    "next_state": "V pripravi", 
+    "state": "osnutek"
+   }, 
+   {
+    "action": "Prekli\u010di", 
+    "allowed": "System Manager", 
+    "next_state": "osnutek", 
+    "state": "V pripravi"
+   }, 
+   {
+    "action": "Potrdi", 
+    "allowed": "System Manager", 
+    "next_state": "Potrjeno", 
+    "state": "V pripravi"
+   }, 
+   {
+    "action": "Prekli\u010di", 
+    "allowed": "System Manager", 
+    "next_state": "V pripravi", 
+    "state": "Potrjeno"
+   }, 
+   {
+    "action": "Zaklju\u010di", 
+    "allowed": "System Manager", 
+    "next_state": "Zaklju\u010deno", 
+    "state": "Potrjeno"
+   }, 
+   {
+    "action": "Prekli\u010di", 
+    "allowed": "System Manager", 
+    "next_state": "Preklicano", 
+    "state": "Zaklju\u010deno"
+   }, 
+   {
+    "action": "Review", 
+    "allowed": "System Manager", 
+    "next_state": "osnutek", 
+    "state": "Preklicano"
+   }
+  ], 
+  "workflow_name": "izracun", 
+  "workflow_state_field": "workflow_state"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Workflow", 
+  "document_type": "Izdelki Formis", 
+  "is_active": 1, 
+  "modified": "2016-11-22 12:33:02.187519", 
+  "name": "Izdelki formis", 
+  "override_status": 0, 
+  "states": [
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "0", 
+    "message": null, 
+    "state": "osnutek", 
+    "update_field": "", 
+    "update_value": "osnutek"
+   }, 
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "0", 
+    "message": null, 
+    "state": "V pripravi", 
+    "update_field": "", 
+    "update_value": "priprava"
+   }, 
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "0", 
+    "message": null, 
+    "state": "Za izdelavo", 
+    "update_field": "", 
     "update_value": "izdelava"
    }
   ], 
@@ -67,7 +180,7 @@
   "doctype": "Workflow", 
   "document_type": "Delovni nalog", 
   "is_active": 1, 
-  "modified": "2016-11-15 18:12:04.759622", 
+  "modified": "2016-11-22 12:33:07.294804", 
   "name": "Delovni nalog", 
   "override_status": 0, 
   "states": [
@@ -89,22 +202,6 @@
    }, 
    {
     "allow_edit": "System Manager", 
-    "doc_status": "1", 
-    "message": null, 
-    "state": "Zaklju\u010deno", 
-    "update_field": null, 
-    "update_value": null
-   }, 
-   {
-    "allow_edit": "System Manager", 
-    "doc_status": "2", 
-    "message": null, 
-    "state": "Preklicano", 
-    "update_field": null, 
-    "update_value": null
-   }, 
-   {
-    "allow_edit": "System Manager", 
     "doc_status": "0", 
     "message": null, 
     "state": "\u010caka stranko", 
@@ -118,6 +215,22 @@
     "state": "Izdelano", 
     "update_field": null, 
     "update_value": null
+   }, 
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "1", 
+    "message": null, 
+    "state": "Zaklju\u010deno", 
+    "update_field": null, 
+    "update_value": null
+   }, 
+   {
+    "allow_edit": "System Manager", 
+    "doc_status": "2", 
+    "message": null, 
+    "state": "Preklicano", 
+    "update_field": null, 
+    "update_value": null
    }
   ], 
   "transitions": [
@@ -126,12 +239,6 @@
     "allowed": "System Manager", 
     "next_state": "V izdelavi", 
     "state": "V pripravi"
-   }, 
-   {
-    "action": "Zaklju\u010di", 
-    "allowed": "System Manager", 
-    "next_state": "Zaklju\u010deno", 
-    "state": "V izdelavi"
    }, 
    {
     "action": "V \u010cakanje", 
@@ -146,16 +253,22 @@
     "state": "\u010caka stranko"
    }, 
    {
+    "action": "Zaklju\u010di izdelavo", 
+    "allowed": "System Manager", 
+    "next_state": "Izdelano", 
+    "state": "V izdelavi"
+   }, 
+   {
     "action": "Prekli\u010di", 
     "allowed": "System Manager", 
     "next_state": "Preklicano", 
     "state": "Zaklju\u010deno"
    }, 
    {
-    "action": "Zaklju\u010di izdelavo", 
+    "action": "Zaklju\u010di", 
     "allowed": "System Manager", 
-    "next_state": "Izdelano", 
-    "state": "V izdelavi"
+    "next_state": "Zaklju\u010deno", 
+    "state": "Izdelano"
    }
   ], 
   "workflow_name": "Delovni nalog", 
@@ -166,7 +279,7 @@
   "doctype": "Workflow", 
   "document_type": "Delovni Nalog Interni", 
   "is_active": 1, 
-  "modified": "2016-08-16 16:18:37.778381", 
+  "modified": "2016-11-21 19:55:13.886582", 
   "name": "Delovni nalog Interni", 
   "override_status": 0, 
   "states": [
@@ -188,7 +301,7 @@
    }, 
    {
     "allow_edit": "System Manager", 
-    "doc_status": "1", 
+    "doc_status": "0", 
     "message": null, 
     "state": "Zaklju\u010deno", 
     "update_field": null, 
@@ -196,7 +309,7 @@
    }, 
    {
     "allow_edit": "System Manager", 
-    "doc_status": "2", 
+    "doc_status": "0", 
     "message": null, 
     "state": "Preklicano", 
     "update_field": null, 
@@ -310,7 +423,7 @@
   "doctype": "Workflow", 
   "document_type": "calc", 
   "is_active": 1, 
-  "modified": "2016-11-16 21:31:06.468387", 
+  "modified": "2016-11-22 12:33:11.163310", 
   "name": "izracun", 
   "override_status": 0, 
   "states": [
