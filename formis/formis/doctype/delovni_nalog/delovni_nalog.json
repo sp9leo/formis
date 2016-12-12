@@ -371,7 +371,7 @@
   }, 
   {
    "allow_on_submit": 0, 
-   "bold": 0, 
+   "bold": 1, 
    "collapsible": 0, 
    "columns": 0, 
    "fieldname": "kosov", 
@@ -625,7 +625,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2016-11-21 19:47:53.763160", 
+ "modified": "2016-12-05 16:41:19.712332", 
  "modified_by": "sandibobek@gmail.com", 
  "module": "Formis", 
  "name": "Delovni nalog", 
