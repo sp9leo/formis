@@ -180,7 +180,7 @@
   "doctype": "Workflow", 
   "document_type": "Delovni nalog", 
   "is_active": 1, 
-  "modified": "2016-11-22 12:33:07.294804", 
+  "modified": "2016-12-03 19:59:40.512254", 
   "name": "Delovni nalog", 
   "override_status": 0, 
   "states": [
@@ -250,6 +250,12 @@
     "action": "Potrdi", 
     "allowed": "System Manager", 
     "next_state": "V izdelavi", 
+    "state": "\u010caka stranko"
+   }, 
+   {
+    "action": "Popravi", 
+    "allowed": "System Manager", 
+    "next_state": "V pripravi", 
     "state": "\u010caka stranko"
    }, 
    {
