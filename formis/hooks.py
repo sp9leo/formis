@@ -37,9 +37,9 @@ fixtures = ["Custom Field", "Custom Script", "Print Format", "Workflow"]
 # Generators
 # ----------
 website_context = {
-	"favicon": 	"/formis/formis/public/favicon.png",
-	"splash_image": "/formis/formis/public/formis_logo.png"
-}
+#	"favicon": 	"/formis/formis/public/favicon.png"
+	"splash_image": "/assets/formis/FormisLogo.png"
+ }
 
 # automatically create page for each record of this doctype
 # website_generators = ["Web Page"]
