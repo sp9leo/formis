@@ -1503,7 +1503,7 @@
   "in_standard_filter": 0, 
   "insert_after": "datum_storitve", 
   "label": "Datum Pla\u010dila", 
-  "modified": "2016-11-15 20:32:12.146790", 
+  "modified": "2017-07-13 11:13:59.595925", 
   "name": "Sales Invoice-placano", 
   "no_copy": 0, 
   "options": null, 
