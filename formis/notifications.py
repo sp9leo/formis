@@ -3,11 +3,11 @@ from __future__ import unicode_literals
 def get_notification_config():
 	return { "for_doctype":
 		{
-			"Delovni nalog": {"status" : 0, "workflow_state": "V pripravi"}
+			"Delovni Nalog": {"Workflow_State": "V pripravi"}
 		},
 		 "for_doctype":
 		{
 			"Delovni Nalog Interni": {"workflow_state": "V pripravi"}
-		}
+		},
 			
 	}
