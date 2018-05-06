@@ -1,0 +1,13 @@
+frappe.ui.form.on("Journal Entry", "validate", function(frm) {
+ 
+ if (frm.doc.voucher_type == "Paypal") {
+var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+var firstDay = new Date(y, m, 1);
+var lastDay = new Date(y, m + 1, 0);
+var datum = ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear();
+frm.set_value("cheque_no", "Plačilo prispevkov " + datum);
+frm.set_value("user_remark", "Prispevki PIZ, ZZZS, STV, ZAP " + lastDay);
+msgprint(lastDay);
+        validated = false;
+    }
+});
