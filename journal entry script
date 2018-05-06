@@ -1,13 +1,13 @@
+var datum = frappe.datetime.nowdate();
+var monthyear= moment(datum).format("DD/YYYY");
+var firstDay = moment(frappe.datetime.month_start(datum)).format("DD.MM");
+var lastDay = moment (frappe.datetime.month_end(datum)).format("DD.MM.YYYY");
+
 frappe.ui.form.on("Journal Entry", "validate", function(frm) {
- 
- if (frm.doc.voucher_type == "Paypal") {
-var date = new Date(), y = date.getFullYear(), m = date.getMonth();
-var firstDay = new Date(y, m, 1);
-var lastDay = new Date(y, m + 1, 0);
-var datum = ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear();
-frm.set_value("cheque_no", "Plačilo prispevkov " + datum);
-frm.set_value("user_remark", "Prispevki PIZ, ZZZS, STV, ZAP " + lastDay);
-msgprint(lastDay);
+if (frm.doc.voucher_type == "Paypal") {
+
+frm.set_value("cheque_no", "Plačilo prispevkov "+ monthyear);
+frm.set_value("user_remark", "Prispevki PIZ, ZZZS, STV, ZAP od "+firstDay+" do " + lastDay);
         validated = false;
     }
 });
