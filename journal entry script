@@ -1,0 +1,43 @@
+
+/*
+frappe.ui.form.on("Journal Entry", "voucher_type", function (frm) {
+	if (frm.doc.voucher_type == "Plačilo prispevkov") {
+		//msgprint("Način plačila je bil spremenjen v GOTOVINA!");
+		frm.set_value("user_remark", "Plačilo prispevkov od___ Prispevki PIZ, ZZ, STV, ZAP");
+		validated = true;
+	}
+});
+
+frappe.ui.form.on("Journal Entry", "voucher_type", function (frm) {
+	if (frm.doc.voucher_type == "Provizija") {
+		//msgprint("Način plačila je bil spremenjen v GOTOVINA!");
+		frm.set_value("cheque_no", "Vodenje računa __/2017");
+		validated = true;
+	}
+});
+*/
+var datum = frappe.datetime.nowdate();
+var monthyear = moment(datum).format("DD/YYYY");
+var firstDay = moment(frappe.datetime.month_start(datum)).format("DD.MM");
+var lastDay = moment(frappe.datetime.month_end(datum)).format("DD.MM.YYYY");
+
+frappe.ui.form.on("Journal Entry", "voucher_type", function (frm) {
+	if (frm.doc.voucher_type == "Plačilo prispevkov") {
+		if (frm.doc.cheque_no ===""){
+
+		frm.set_value("cheque_no", "Plačilo prispevkov " + monthyear);
+		frm.set_value("user_remark", "Prispevki PIZ, ZZZS, STV, ZAP od " + firstDay + " do " + lastDay);
+		validated = true;
+	}
+	}
+});
+frappe.ui.form.on("Journal Entry", "voucher_type", function (frm) {
+	if (frm.doc.voucher_type == "Provizija") {
+		if (frm.doc.cheque_no ===""){
+
+		frm.set_value("cheque_no", "Vodenje računa " + monthyear);
+		frm.set_value("user_remark", "Stroški vodenja računa od " + firstDay + " do " + lastDay);
+		validated = true;
+	}
+}
+});
