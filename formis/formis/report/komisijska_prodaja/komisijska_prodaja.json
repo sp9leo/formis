@@ -1,0 +1,27 @@
+{
+ "add_total_row": 1, 
+ "apply_user_permissions": 1, 
+ "creation": "2018-08-02 18:19:45.661756", 
+ "disabled": 0, 
+ "docstatus": 0, 
+ "doctype": "Report", 
+ "idx": 0, 
+ "is_standard": "Yes", 
+ "modified": "2018-08-02 18:47:33.133680", 
+ "modified_by": "Administrator", 
+ "module": "Formis", 
+ "name": "Komisijska prodaja", 
+ "owner": "Administrator", 
+ "query": "select\n    `tabDelivery Note`.`name` as \"Delivery Note:Link/Delivery Note:120\",\n    `tabDelivery Note`.`posting_date` as \"Date:Date\",\n\t`tabDelivery Note`.`customer` as \"Customer:Link/Customer:120\",\n--\t`tabDelivery Note`.`customer_name` as \"Customer Name::150\",\n--\t`tabDelivery Note`.`project` as \"Project\",\n\t`tabDelivery Note Item`.`item_code` as \"Item:Link/Item:120\",\n\t`tabDelivery Note Item`.`qty` as \"Item Qty:Float:80\",\n\t`tabDelivery Note Item`.`rate` as \"Item Rate:Currency:80\",\n\t(`tabDelivery Note Item`.`billed_amt` / `tabDelivery Note Item`.`rate`) as \"Prodano:Float:80\",\n(`tabDelivery Note Item`.`qty`)-(`tabDelivery Note Item`.`billed_amt` / `tabDelivery Note Item`.`rate`) as \"Neprodano:Float:110\",\n`tabDelivery Note Item`.`billed_amt` as \"Prodano EUR:Currency:80\",\n(`tabDelivery Note Item`.`base_amount` - `tabDelivery Note Item`.`billed_amt`*ifnull(`tabDelivery Note`.conversion_rate, 1)) as \"Neprodano EUR:Currency:110\",\n\t\n\t\n\t\n\t`tabDelivery Note Item`.`item_name` as \"Item Name::150\",\n--\t`tabDelivery Note Item`.`description` as \"Description::200\",\n\t`tabDelivery Note`.`po_no` as \"Narocilnica::120\",\n\t`tabDelivery Note Item`.`against_sales_order` as \"Narocilo:Link/Sales Order:150\",\n\t`tabDelivery Note`.`company` as \"Company:Link/Company:\"\nfrom `tabDelivery Note`, `tabDelivery Note Item`\nwhere  \n    `tabDelivery Note`.name = `tabDelivery Note Item`.parent \n --   and `tabDelivery Note`.docstatus = 1 \n    and `tabDelivery Note`.`status` not in (\"Stopped\", \"Closed\") \n    and `tabDelivery Note Item`.amount > 0\n   and `tabDelivery Note Item`.billed_amt < `tabDelivery Note Item`.amount\norder by `tabDelivery Note`.`name` desc\n", 
+ "ref_doctype": "Sales Invoice", 
+ "report_name": "Komisijska prodaja", 
+ "report_type": "Query Report", 
+ "roles": [
+  {
+   "role": "Accounts Manager"
+  }, 
+  {
+   "role": "Accounts User"
+  }
+ ]
+}
