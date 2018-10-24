@@ -1,5 +1,5 @@
 @frappe.whitelist()
-def testnafunkcija:
+def testnafunkcija():
 frappe.call({
 					"method": "frappe.client.set_value",
 					"args": {
