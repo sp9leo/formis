@@ -1,0 +1,35 @@
+{
+ "add_total_row": 1, 
+ "apply_user_permissions": 1, 
+ "creation": "2019-07-22 13:13:20.632973", 
+ "disabled": 0, 
+ "docstatus": 0, 
+ "doctype": "Report", 
+ "idx": 0, 
+ "is_standard": "Yes", 
+ "json": "{\"add_total_row\": 0}", 
+ "letter_head": "Formis", 
+ "modified": "2019-07-22 13:21:38.124964", 
+ "modified_by": "Administrator", 
+ "module": "Formis", 
+ "name": "Komisijska prodaja  Artikli po dobavnicah", 
+ "owner": "sandibobek@gmail.com", 
+ "query": "SELECT\n  SubQuery.Dobavnica AS \"Dobavnica:Link/Delivery Note:100\",\n  SubQuery.item_code AS \"Item:Link/Item:150\",\n  SubQuery.`Delivered Qty`AS `Delivered qty:Float:100`,\n  SubQuery_1.`Billed Qty` as \"Billed qty:Float:80\",\nSUM(SubQuery.`Delivered Qty` - IfNULL(SubQuery_1.`Billed Qty`,0)) AS `Pending Qty:Float:100`,\n  SubQuery.rate as \"cena:Currency:60\",\n  SubQuery.against_sales_order as \"Sales Order:Link/Sales Order:120\",\n  SubQuery.Naro\u010dilnica AS \"#naro\u010dila:60\",\n  SubQuery.po_date AS \"Datum naro\u010dila:Date:100\",\n  SubQuery.posting_date AS \"Datum dobavnice:Date:100\"\nFROM (SELECT\n    SUM(`tabSales Invoice Item`.qty) AS `Billed Qty`,\n    `tabSales Invoice Item`.item_code,\n    `tabSales Invoice Item`.dn_detail\n  FROM `tabSales Invoice Item`\n  GROUP BY `tabSales Invoice Item`.item_code,\n           `tabSales Invoice Item`.dn_detail) SubQuery_1\n  RIGHT OUTER JOIN (SELECT DISTINCT\n      `tabDelivery Note Item`.item_code,\n      SUM(`tabDelivery Note Item`.qty) AS `Delivered Qty`,\n      `tabDelivery Note Item`.parent AS Dobavnica,\n      `tabDelivery Note Item`.name,\n      `tabDelivery Note Item`.rate,\n      `tabDelivery Note Item`.against_sales_order,\n      `tabSales Order`.po_no AS Naro\u010dilnica,\n      `tabDelivery Note Item`.creation,\n      `tabSales Order`.po_date,\n      `tabDelivery Note`.posting_date\n    FROM `tabDelivery Note Item`\n      INNER JOIN `tabItem Group`\n        ON `tabDelivery Note Item`.item_group = `tabItem Group`.name\n      INNER JOIN `tabSales Order`\n        ON `tabSales Order`.name = `tabDelivery Note Item`.against_sales_order\n      INNER JOIN `tabDelivery Note`\n        ON `tabDelivery Note`.name = `tabDelivery Note Item`.parent\n    WHERE `tabDelivery Note Item`.docstatus = 1\n    AND `tabItem Group`.parent_item_group = \"komisijska prodaja\"\n    GROUP BY `tabDelivery Note Item`.item_code,\n             `tabDelivery Note Item`.parent,\n             `tabDelivery Note Item`.name,\n             `tabDelivery Note Item`.rate,\n             `tabDelivery Note Item`.against_sales_order,\n             `tabSales Order`.po_no,\n             `tabDelivery Note Item`.creation,\n             `tabSales Order`.po_date,\n             `tabDelivery Note`.posting_date\n    ORDER BY Dobavnica DESC) SubQuery\n    ON SubQuery_1.item_code = SubQuery.item_code\n    AND SubQuery.name = SubQuery_1.dn_detail\nGROUP BY SubQuery.item_code,\n         SubQuery_1.item_code,\n         SubQuery.Dobavnica,\n         SubQuery.rate,\n         SubQuery.against_sales_order,\n         SubQuery_1.`Billed Qty`,\n         SubQuery.Naro\u010dilnica,\n         SubQuery.po_date,\n         SubQuery.posting_date\nORDER BY SubQuery.Dobavnica, Dobavnica DESC", 
+ "ref_doctype": "Delivery Note", 
+ "report_name": "Komisijska prodaja  Artikli po dobavnicah", 
+ "report_type": "Query Report", 
+ "roles": [
+  {
+   "role": "Stock User"
+  }, 
+  {
+   "role": "Stock Manager"
+  }, 
+  {
+   "role": "Sales User"
+  }, 
+  {
+   "role": "Accounts User"
+  }
+ ]
+}
